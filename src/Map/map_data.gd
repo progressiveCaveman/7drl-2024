@@ -116,4 +116,4 @@ func get_actor_at_location(location: Vector2i) -> Entity:
 
 func reveal_map() -> void:
 	for tile in tiles:
-		tile.is_in_view = true
+		tile.is_explored = true

@@ -29,10 +29,8 @@ func set_tile_type(tile_definition: TileDefinition) -> void:
 	texture = _definition.texture
 	modulate = _definition.color_dark
 
-
 func is_walkable() -> bool:
 	return _definition.is_walkable
-
 
 func is_transparent() -> bool:
 	return _definition.is_transparent

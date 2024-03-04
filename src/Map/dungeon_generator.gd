@@ -53,17 +53,19 @@ func generate_dungeon(player:Entity) -> MapData:
 		if has_intersections:
 			continue
 		
-		_carve_room(dungeon, new_room)
+		#_carve_room(dungeon, new_room)
 		
 		if rooms.is_empty():
 			player.grid_position = new_room.get_center()
 			player.map_data = dungeon
 		else:
-			_tunnel_between(dungeon, rooms.back().get_center(), new_room.get_center())
+			_tunnel_drunkard(dungeon, rooms.back().get_center(), new_room.get_center())
 		
-		_place_entities(dungeon, new_room)
+		_place_entities(dungeon, new_room) # TODO need to move this post-bombing
 		
 		rooms.append(new_room)
+	
+	_bomb_level(dungeon)
 	
 	dungeon.setup_pathfinding()
 	return dungeon
@@ -75,6 +77,59 @@ func _carve_room(dungeon: MapData, room: Rect2i) -> void:
 		for x in range(inner.position.x, inner.end.x + 1):
 			_carve_tile(dungeon, x, y)
 
+func _bomb_level(dungeon: MapData) -> void:
+	# create an array of all open tiles
+	var candidates: Array[Vector2i] = []
+	
+	for x in range(1, map_width - 1):
+		for y in range(1, map_height - 1):
+			var tile_position = Vector2i(x, y)
+			var tile: Tile = dungeon.get_tile(tile_position)
+			if tile.is_walkable():
+				candidates.append(tile_position)
+	
+	candidates.shuffle()
+	
+	var dungeon_openness_modifier = 1.8
+	var iteration_amt = candidates.size() * dungeon_openness_modifier
+	
+	for i in range(0, iteration_amt):
+		if candidates.size() <= 1:
+			print("Bail out on iteration %s " % i)
+			break
+		
+		var idx_offset = 0
+		
+		# 1/3 chance that bombing point will be in last 15 positions
+		if randi() % 3  == 0:
+			idx_offset = max(0, candidates.size() - 15 + randi() % 15)
+		else: # otherwise use lower half of candidates
+			idx_offset = randi() % (candidates.size() / 2)
+			
+		# check idx_offset bounds
+		idx_offset = min(idx_offset, candidates.size() - 1)
+		
+		var idx = candidates[idx_offset]
+		var bomb_radius = 1 # can give a chance of larger bombs here for variation
+		
+		# max(0, tx - bomb_radius - 1) Is -1 important here??
+		for x in range(max(1, idx.x - bomb_radius), min(map_width - 1, idx.x + bomb_radius)):
+			for y in range(max(1, idx.y - bomb_radius), min(map_width - 1, idx.y + bomb_radius)):
+				# check if tile is within circle (Ranges select a square)
+				if (x - idx.x) * (x - idx.x) + (y - idx.y) * (y - idx.y) < bomb_radius * bomb_radius + bomb_radius:
+					
+					# bail out if out of bounds. Is this necessary?
+					if x >= map_width || y >= map_height || x <= 0 || y <= 0:
+						continue
+					
+					# bomb out coords and add new open spaces to candidates
+					var tile_position = Vector2i(x, y)
+					var tile: Tile = dungeon.get_tile(tile_position)
+					if not tile.is_walkable():
+						_carve_tile(dungeon, x, y)
+						candidates.append(tile_position)
+			
+		candidates.erase(idx)
 
 func _tunnel_horizontal(dungeon: MapData, y: int, x_start: int, x_end: int) -> void:
 	var x_min: int = mini(x_start, x_end)
@@ -98,11 +153,33 @@ func _tunnel_between(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 		_tunnel_vertical(dungeon, start.x, start.y, end.y)
 		_tunnel_horizontal(dungeon, end.y, start.x, end.x)
 
+func _tunnel_drunkard(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
+	var x = start.x
+	var y = start.y
+	
+	while x != end.x || y != end.y:
+		var xdir = -1 if start.x > end.x else 1
+		var ydir = -1 if start.y > end.y else 1
+		
+		var xdiff = abs(x - end.x)
+		var ydiff = abs(y - end.y)
+		
+		if ydiff > 3 * xdiff:
+			y += ydir
+		elif xdiff > 3 * ydiff:
+			x += xdir
+		else:
+			if randi() % 2 == 0:
+				x += xdir
+			else:
+				y += ydir
+				
+		_carve_tile(dungeon, x, y)
 
 func _carve_tile(dungeon: MapData, x: int, y: int) -> void:
-		var tile_position = Vector2i(x, y)
-		var tile: Tile = dungeon.get_tile(tile_position)
-		tile.set_tile_type(dungeon.tile_types.floor)
+	var tile_position = Vector2i(x, y)
+	var tile: Tile = dungeon.get_tile(tile_position)
+	tile.set_tile_type(dungeon.tile_types.floor)
 
 
 func _place_entities(dungeon: MapData, room: Rect2i) -> void:
