@@ -113,3 +113,7 @@ func get_actor_at_location(location: Vector2i) -> Entity:
 		if actor.grid_position == location:
 			return actor
 	return null
+
+func reveal_map() -> void:
+	for tile in tiles:
+		tile.is_in_view = true

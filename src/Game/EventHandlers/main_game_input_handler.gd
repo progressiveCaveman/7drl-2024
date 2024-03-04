@@ -47,6 +47,9 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
 	
+	if Input.is_action_just_pressed("reveal_map"):
+		action = RevealAction.new(player)
+	
 	return action
 
 
