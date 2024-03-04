@@ -1,0 +1,12 @@
+res://src/Game/game.tscn
+res://assets/definitions/tiles/tile_definition_floor.tres
+res://assets/definitions/tiles/tile_definition_wall.tres
+res://assets/definitions/entities/actors/entity_definition_player.tres
+res://assets/definitions/entities/actors/entity_definition_orc.tres
+res://assets/definitions/entities/actors/entity_definition_troll.tres
+res://assets/definitions/entities/items/health_potion_definition.tres
+res://assets/definitions/entities/items/lightning_scroll_definition.tres
+res://assets/definitions/entities/items/confusion_scroll_definition.tres
+res://assets/definitions/entities/items/fireball_scroll_definition.tres
+res://assets/tile_definitions/tile_wall.tres
+res://assets/tile_definitions/tile_floor.tres
