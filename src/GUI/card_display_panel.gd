@@ -3,21 +3,18 @@ extends PanelContainer
 @onready var vbox = $CardVBox
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
-var player_cards: Cards
-var current_hand: Array[Cards.Card]
+var current_hand: Array[Card]
 var hand_size: int = 0
 
 func _ready() -> void:
 	var game = get_parent().get_node("VBoxContainer/SubViewportContainer/SubViewport/Game")
-	await game.hand_initialized == true
-	player_cards = game.player_cards
-	game.player_cards.hand_updated.connect(_on_hand_updated)
+	PlayerCards.hand_updated.connect(_on_hand_updated)
 	_on_hand_updated()
 	pass
 
 func _on_hand_updated() -> void:
 	current_hand.clear()
-	current_hand = player_cards.hand
+	current_hand = PlayerCards.hand
 	hand_size = current_hand.size()
 	update_panel()
 

@@ -1,6 +1,6 @@
 extends Panel
 
-var CardType = Cards.CardType
+var CardType = Card.CardType
 @onready var label := $Label
 
 func set_text(text) -> void:

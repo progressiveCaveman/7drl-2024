@@ -61,11 +61,12 @@ func generate_dungeon(player:Entity) -> MapData:
 		else:
 			_tunnel_drunkard(dungeon, rooms.back().get_center(), new_room.get_center())
 		
-		_place_entities(dungeon, new_room) # TODO need to move this post-bombing
-		
 		rooms.append(new_room)
 	
 	_bomb_level(dungeon)
+	
+	for room in rooms:
+		_place_entities(dungeon, room)
 	
 	dungeon.setup_pathfinding()
 	return dungeon
@@ -186,18 +187,20 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 	var number_of_monsters: int = _rng.randi_range(0, max_monsters_per_room)
 	var number_of_items: int = _rng.randi_range(0, max_items_per_room)
 	
-	for _i in number_of_monsters:
+	var monsters_placed = 0
+	while monsters_placed < number_of_monsters:
 		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
 		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
 		var new_entity_position := Vector2i(x, y)
 		
-		var can_place = true
+		var can_place = dungeon.get_tile(new_entity_position).is_walkable()
 		for entity in dungeon.entities:
 			if entity.grid_position == new_entity_position:
 				can_place = false
 				break
 		
 		if can_place:
+			monsters_placed += 1
 			var new_entity: Entity
 			if _rng.randf() < 0.8:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
@@ -205,18 +208,20 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.troll)
 			dungeon.entities.append(new_entity)
 	
-	for _i in number_of_items:
+	var items_placed = 0	
+	while items_placed < number_of_items:
 		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
 		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
 		var new_entity_position := Vector2i(x, y)
 		
-		var can_place = true
+		var can_place = dungeon.get_tile(new_entity_position).is_walkable()
 		for entity in dungeon.entities:
 			if entity.grid_position == new_entity_position:
 				can_place = false
 				break
 		
 		if can_place:
+			items_placed += 1
 			var item_chance: float = _rng.randf()
 			var new_entity: Entity
 			if item_chance < 0.7:

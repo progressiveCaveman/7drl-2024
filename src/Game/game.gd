@@ -5,31 +5,16 @@ signal player_created(player)
 
 const player_definition: EntityDefinition = preload("res://assets/definitions/entities/actors/entity_definition_player.tres")
 const tile_size = 16
-const starting_deck = [Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Rook, 
-	Cards.CardType.Rook, Cards.CardType.Damage1, Cards.CardType.Damage1, Cards.CardType.Damage1, Cards.CardType.Damage1]
 
 @onready var player: Entity
 @onready var input_handler: InputHandler = $InputHandler
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
-@onready var player_cards: Cards
-var hand_initialized = false
-
-
 
 func _ready() -> void:
 	player = Entity.new(null, Vector2i.ZERO, player_definition)
 	player_created.emit(player)
 	
-	player_cards = Cards.new()
-	for c in starting_deck:
-		player_cards.gain_card(c)
-	player_cards.shuffle_discard()
-	print("Player hand:")
-	for i in range(0,5):
-		player_cards.draw_card()
-		print(player_cards.hand[i].name)
-	hand_initialized = true
 	remove_child(camera)
 	player.add_child(camera)
 	

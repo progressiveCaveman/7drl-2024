@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SignalBus="*res://src/Utils/signal_bus.gd"
+PlayerCards="*res://src/Game/Cards/player_cards.gd"
 
 [input]
 
@@ -123,6 +124,11 @@ look={
 reveal_map={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"echo":false,"script":null)
+]
+}
+play_card={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"echo":false,"script":null)
 ]
 }
 
