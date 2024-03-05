@@ -25,7 +25,7 @@ func update_panel() -> void:
 	for id in range(current_hand.size()):
 		var new_card = card.instantiate()
 		vbox.add_child(new_card)
-		new_card.set_text(current_hand[id].name)
+		new_card.set_text(current_hand[id].name, current_hand[id].description)
 	
 	# variables to adjust offsets for overlap when hand > 5
 	#var window_size: Vector2 = DisplayServer.window_get_size()

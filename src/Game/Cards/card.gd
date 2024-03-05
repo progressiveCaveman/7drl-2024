@@ -33,7 +33,7 @@ Move to an adjacent square
 			type = card
 			name = "Rook"
 			description = """
-Move any number of spaces in cardinal directions
+Move in straight line
 +1 action
 """
 		CardType.Damage1:
@@ -46,7 +46,7 @@ Add 1 damage to next attack
 			type = card
 			name = "Knight"
 			description = """
-Move 2 spaces in one direction then 1 in another
+Move like knight
 """
 		CardType.Queen:
 			type = card
