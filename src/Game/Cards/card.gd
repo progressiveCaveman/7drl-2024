@@ -34,7 +34,7 @@ Move to an adjacent square
 			name = "Rook"
 			description = """
 Move in straight line
-+1 action
++1 card
 """
 		CardType.Damage1:
 			type = card
@@ -47,6 +47,7 @@ Add 1 damage to next attack
 			name = "Knight"
 			description = """
 Move like knight
++1 action
 """
 		CardType.Queen:
 			type = card

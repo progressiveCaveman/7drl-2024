@@ -1,7 +1,10 @@
 extends Node
 
-const starting_deck = [Card.CardType.Pawn, Card.CardType.Pawn, Card.CardType.Pawn, Card.CardType.Pawn, Card.CardType.Rook, 
-	Card.CardType.Rook, Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1]
+const starting_deck = [
+	Card.CardType.Pawn, Card.CardType.Pawn, 
+	Card.CardType.Knight, Card.CardType.Knight, 
+	Card.CardType.Rook, Card.CardType.Rook, 
+	Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1]
 
 signal hand_updated()
 
