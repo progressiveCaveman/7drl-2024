@@ -5,24 +5,39 @@ signal player_created(player)
 
 const player_definition: EntityDefinition = preload("res://assets/definitions/entities/actors/entity_definition_player.tres")
 const tile_size = 16
+const starting_deck = [Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.Rook, 
+	Cards.CardType.Rook, Cards.CardType.Damage1, Cards.CardType.Damage1, Cards.CardType.Damage1, Cards.CardType.Damage1]
 
 @onready var player: Entity
 @onready var input_handler: InputHandler = $InputHandler
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
+@onready var player_cards: Cards
 
 
 func _ready() -> void:
 	player = Entity.new(null, Vector2i.ZERO, player_definition)
 	player_created.emit(player)
+	
+	player_cards = Cards.new()
+	player_cards.library.append_array(starting_deck)
+	player_cards.library.shuffle()
+	print("Player hand:")
+	for i in range(0,5):
+		player_cards.draw_card()
+		print(Cards.Card.new(player_cards.hand[i]).name)
+	
 	remove_child(camera)
 	player.add_child(camera)
+	
 	map.generate(player)
 	map.update_fov(player.grid_position)
+	
 	MessageLog.send_message.bind(
 		"Hello and welcome, adventurer, to yet another dungeon!",
 		GameColors.WELCOME_TEXT
 	).call_deferred()
+	
 	camera.make_current.call_deferred()
 
 func _physics_process(_delta: float) -> void:
