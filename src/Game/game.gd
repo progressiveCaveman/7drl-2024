@@ -13,6 +13,8 @@ const starting_deck = [Cards.CardType.Pawn, Cards.CardType.Pawn, Cards.CardType.
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
 @onready var player_cards: Cards
+var hand_initialized = false
+
 
 
 func _ready() -> void:
@@ -27,7 +29,7 @@ func _ready() -> void:
 	for i in range(0,5):
 		player_cards.draw_card()
 		print(player_cards.hand[i].name)
-	
+	hand_initialized = true
 	remove_child(camera)
 	player.add_child(camera)
 	

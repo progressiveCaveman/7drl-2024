@@ -15,7 +15,7 @@
 [ext_resource type="Script" path="res://src/GUI/hp_display.gd" id="9_njvq4"]
 [ext_resource type="PackedScene" uid="uid://d36pgskfsvwj2" path="res://src/GUI/Reticle/reticle.tscn" id="11_n4t22"]
 [ext_resource type="Script" path="res://src/GUI/message_log.gd" id="11_xxafc"]
-[ext_resource type="Script" path="res://src/GUI/card_display_panel.gd" id="16_on26a"]
+[ext_resource type="Script" path="res://src/GUI/cards_panel.gd" id="16_on26a"]
 [ext_resource type="PackedScene" uid="uid://dndq5iahsttml" path="res://src/GUI/CardPanel/card_panel.tscn" id="17_vnefh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7j4i"]
@@ -180,21 +180,22 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer"]
+[node name="CardsPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
 script = ExtResource("16_on26a")
 
-[node name="CardVBox" type="VBoxContainer" parent="HBoxContainer/CardDisplayPanel"]
+[node name="CardVBox" type="VBoxContainer" parent="HBoxContainer/CardsPanel"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CardPanel" parent="HBoxContainer/CardDisplayPanel/CardVBox" instance=ExtResource("17_vnefh")]
+[node name="CardPanel" parent="HBoxContainer/CardsPanel/CardVBox" instance=ExtResource("17_vnefh")]
 visible = false
-custom_minimum_size = Vector2(200, 120)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="entities_focussed" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]

@@ -12,6 +12,8 @@ enum CardType {
 	Damage2,
 }
 
+signal hand_updated()
+
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
@@ -45,6 +47,7 @@ func draw_card():
 	
 	if library.size() > 0:
 		hand.append(library.pop_front())
+		emit_signal("hand_updated", hand)
 
 func discard_card(card: CardType) -> void: 
 	discard.append(card)

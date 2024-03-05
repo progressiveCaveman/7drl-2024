@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://dndq5iahsttml"]
+
+[ext_resource type="Texture2D" uid="uid://lsy51jhvcxqy" path="res://assets/images/card_bg.png" id="1_fh6yl"]
+[ext_resource type="Script" path="res://src/GUI/CardPanel/card_panel.gd" id="2_bvxa2"]
+[ext_resource type="FontFile" uid="uid://c244bgm64ellr" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf" id="3_vljc6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ey3id"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("1_fh6yl")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ejepa"]
+font = ExtResource("3_vljc6")
+font_color = Color(0, 0, 0, 1)
+
+[node name="CardPanel" type="Panel"]
+custom_minimum_size = Vector2(160, 120)
+anchors_preset = -1
+anchor_right = 0.208
+anchor_bottom = 0.247
+offset_right = 0.384003
+offset_bottom = -0.0559998
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
+script = ExtResource("2_bvxa2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ffgdgdgf"
+label_settings = SubResource("LabelSettings_ejepa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
