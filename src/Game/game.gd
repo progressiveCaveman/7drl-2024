@@ -20,12 +20,13 @@ func _ready() -> void:
 	player_created.emit(player)
 	
 	player_cards = Cards.new()
-	player_cards.library.append_array(starting_deck)
-	player_cards.library.shuffle()
+	for c in starting_deck:
+		player_cards.gain_card(c)
+	player_cards.shuffle_discard()
 	print("Player hand:")
 	for i in range(0,5):
 		player_cards.draw_card()
-		print(Cards.Card.new(player_cards.hand[i]).name)
+		print(player_cards.hand[i].name)
 	
 	remove_child(camera)
 	player.add_child(camera)

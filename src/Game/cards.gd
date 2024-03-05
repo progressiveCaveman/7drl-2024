@@ -12,11 +12,11 @@ enum CardType {
 	Damage2,
 }
 
-@export var library: Array[CardType] = []
-@export var discard: Array[CardType] = []
-@export var hand: Array[CardType] = []
+@export var library: Array[Card] = []
+@export var discard: Array[Card] = []
+@export var hand: Array[Card] = []
 
-class Card:
+class Card extends Resource:
 	@export var name: String
 	
 	func _init(card: CardType) -> void:
@@ -53,3 +53,6 @@ func shuffle_discard() -> void:
 	library.append_array(discard)
 	discard.clear()
 	library.shuffle()
+
+func gain_card(cardtype: CardType) -> void:
+	discard.append(Card.new(cardtype))
