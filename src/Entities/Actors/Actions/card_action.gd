@@ -20,6 +20,10 @@ func get_target_actor() -> Entity:
 func perform() -> bool:
 	if card == null:
 		return false
+	
+	if PlayerCards.play_card(card.type):
+		#match card.type:
+			print("asd")
 
 	print("playing card. This does nothing")
 	return true #item.consumable_component.activate(self)

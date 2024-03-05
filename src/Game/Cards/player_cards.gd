@@ -10,14 +10,11 @@ signal hand_updated()
 @export var hand: Array[Card] = []
 
 func _init() -> void:
-	#player_cards = Cards.new()
 	for c in starting_deck:
 		self.gain_card(c)
 	self.shuffle_discard()
-	print("Player hand:")
 	for i in range(0,5):
 		self.draw_card()
-		print(self.hand[i].name)
 
 func draw_card(): 
 	if library.size() == 0:
@@ -31,10 +28,30 @@ func discard_card(card: Card.CardType) -> void:
 	discard.append(card)
 
 func shuffle_discard() -> void:
-	#print(_card_defs.data)
 	library.append_array(discard)
 	discard.clear()
 	library.shuffle()
 
 func gain_card(cardtype: Card.CardType) -> void:
 	discard.append(Card.new(cardtype))
+
+func play_card(cardtype) -> bool:
+	for i in range(0, hand.size()):
+		var card = hand[i]
+		if card.type == cardtype:
+			discard.append(card)
+			hand.remove_at(i)
+			return true
+	
+	return false
+
+func print_state():
+	print("Library:")
+	for card in library:
+		print("  %s" % card.name)
+	print("Hand:")
+	for card in hand:
+		print("  %s" % card.name)
+	print("Discard:")
+	for card in discard:
+		print("  %s" % card.name)
