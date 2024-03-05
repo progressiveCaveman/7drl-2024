@@ -10,6 +10,10 @@ func perform() -> bool:
 		return false
 	
 	var damage: int = entity.fighter_component.power - target.fighter_component.defense
+	if entity == get_map_data().player:
+		damage += PlayerCards.damage_mod
+		PlayerCards.damage_mod = 0
+	
 	var attack_color: Color
 	if entity == get_map_data().player:
 		attack_color = GameColors.PLAYER_ATTACK
@@ -20,6 +24,7 @@ func perform() -> bool:
 		attack_description += " for %d hit points." % damage
 		MessageLog.send_message(attack_description, attack_color)
 		target.fighter_component.hp -= damage
+		print("%s damage" % damage)
 	else:
 		attack_description += " but does no damage."
 		MessageLog.send_message(attack_description, attack_color)

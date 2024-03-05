@@ -51,8 +51,9 @@ func get_action(player: Entity) -> Action:
 		action = RevealAction.new(player)
 	
 	if Input.is_action_just_pressed("play_card"):
-		var card = PlayerCards.hand[0]
-		action = CardAction.new(player, card, )
+		if PlayerCards.hand.size() > 0:
+			var card = PlayerCards.hand[0]
+			action = CardAction.new(player, card, )
 	
 	return action
 

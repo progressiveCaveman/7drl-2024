@@ -8,6 +8,7 @@ signal hand_updated()
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
+@export var damage_mod = 0 # amt of damage played, this shouldn't live here but it's convenient for now
 
 func _init() -> void:
 	for c in starting_deck:
@@ -39,6 +40,7 @@ func play_card(cardtype) -> bool:
 	for i in range(0, hand.size()):
 		var card = hand[i]
 		if card.type == cardtype:
+			print_state()
 			discard.append(card)
 			hand.remove_at(i)
 			return true

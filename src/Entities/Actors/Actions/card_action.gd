@@ -22,8 +22,25 @@ func perform() -> bool:
 		return false
 	
 	if PlayerCards.play_card(card.type):
-		#match card.type:
-			print("asd")
+		match card.type:
+			Card.CardType.Error:
+				return false
+			Card.CardType.Pawn:
+				return true
+			Card.CardType.Rook:
+				return true
+			Card.CardType.Damage1:
+				PlayerCards.damage_mod += 1
+				return true
+			Card.CardType.Knight:
+				return true
+			Card.CardType.Queen:
+				return true
+			Card.CardType.King:
+				return true
+			Card.CardType.Damage2:
+				PlayerCards.damage_mod += 2
+				return true
 
-	print("playing card. This does nothing")
-	return true #item.consumable_component.activate(self)
+	print("failed to play card")
+	return false 
