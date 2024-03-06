@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dndq5iahsttml"]
+[gd_scene load_steps=6 format=3 uid="uid://dndq5iahsttml"]
 
 [ext_resource type="Texture2D" uid="uid://lsy51jhvcxqy" path="res://assets/images/card_bg.png" id="1_fh6yl"]
 [ext_resource type="Script" path="res://src/GUI/CardPanel/card_panel.gd" id="2_bvxa2"]
@@ -17,12 +17,6 @@ texture_margin_bottom = 5.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ejepa"]
 font = ExtResource("3_vljc6")
-font_size = 15
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ldkl8"]
-font = ExtResource("3_vljc6")
-font_size = 11
 font_color = Color(0, 0, 0, 1)
 
 [node name="CardPanel" type="Panel"]
@@ -32,32 +26,32 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
 script = ExtResource("2_bvxa2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="LabelTitle" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_bottom = 24.0
 grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="LabelTitle" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "ffgdgdgf"
+text = "Title"
 label_settings = SubResource("LabelSettings_ejepa")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LabelDescription" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "the quick brown fox jumps over the lazy dog. the quick brown fox jumps over the lazy dog. "
-label_settings = SubResource("LabelSettings_ldkl8")
+[node name="LabelDescription" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Desc"
+label_settings = SubResource("LabelSettings_ejepa")
 horizontal_alignment = 1
-autowrap_mode = 3
+vertical_alignment = 1
+autowrap_mode = 2
+max_lines_visible = 6
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

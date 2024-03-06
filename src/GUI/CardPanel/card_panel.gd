@@ -1,8 +1,8 @@
 extends Panel
 
 var CardType = Card.CardType
-@onready var label_title := $VBoxContainer/LabelTitle
-@onready var label_description := $VBoxContainer/LabelDescription
+@onready var label_title := $LabelTitle
+@onready var label_description := $LabelDescription
 
 func set_text(text, desc) -> void:
 	label_title.text = text
