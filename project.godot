@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 SignalBus="*res://src/Utils/signal_bus.gd"
 PlayerCards="*res://src/Game/Cards/player_cards.gd"
 
+[display]
+
+window/size/viewport_width=1500
+window/size/viewport_height=900
+
 [input]
 
 move_up={

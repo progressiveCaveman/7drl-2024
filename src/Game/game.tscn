@@ -41,11 +41,13 @@ bg_color = Color(0, 0.498039, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_c11as"]
 font = ExtResource("9_8xlja")
+font_size = 32
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_sr2kr"]
 font = ExtResource("9_8xlja")
+font_size = 32
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84atu"]
 content_margin_left = 0.0
@@ -78,6 +80,7 @@ grow_vertical = 2
 custom_minimum_size = Vector2(900, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 20.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -89,7 +92,7 @@ stretch = true
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(900, 536)
+size = Vector2i(1246, 746)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport"]
@@ -140,6 +143,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="StatsPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer/InfoBar"]
+custom_minimum_size = Vector2(160, 128)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
@@ -153,6 +157,7 @@ script = ExtResource("9_njvq4")
 
 [node name="HpBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_oyudx")
@@ -192,8 +197,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
 script = ExtResource("16_on26a")
 
@@ -205,6 +211,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CardPanel" parent="HBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
+custom_minimum_size = Vector2(250, 150)
 layout_mode = 2
 size_flags_horizontal = 1
 
