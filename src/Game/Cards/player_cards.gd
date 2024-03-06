@@ -26,7 +26,7 @@ func draw_card():
 	
 	if library.size() > 0:
 		hand.append(library.pop_front())
-		emit_signal("hand_updated", hand)
+		emit_signal("hand_updated")
 
 func discard_card(card: Card.CardType) -> void: 
 	discard.append(card)
