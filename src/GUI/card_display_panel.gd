@@ -1,6 +1,6 @@
 extends PanelContainer
 
-@onready var vbox = $CardVBox
+@onready var vbox = $CardScroll/CardVBox
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var current_hand: Array[Card]
@@ -26,7 +26,7 @@ func update_panel() -> void:
 		var new_card = card.instantiate()
 		vbox.add_child(new_card)
 		new_card.set_text(current_hand[id].name, current_hand[id].description)
-	
+		
 	# variables to adjust offsets for overlap when hand > 5
 	#var window_size: Vector2 = DisplayServer.window_get_size()
 	#var v_margins = 30
