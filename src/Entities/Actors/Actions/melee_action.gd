@@ -24,7 +24,6 @@ func perform() -> bool:
 		attack_description += " for %d hit points." % damage
 		MessageLog.send_message(attack_description, attack_color)
 		target.fighter_component.hp -= damage
-		print("%s damage" % damage)
 	else:
 		attack_description += " but does no damage."
 		MessageLog.send_message(attack_description, attack_color)

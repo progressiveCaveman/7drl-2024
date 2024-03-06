@@ -43,9 +43,9 @@ func play_card(cardtype) -> bool:
 	for i in range(0, hand.size()):
 		var card = hand[i]
 		if card.type == cardtype:
-			print_state()
 			discard.append(card)
 			hand.remove_at(i)
+			print_state()
 			return true
 	
 	return false
