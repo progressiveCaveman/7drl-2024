@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/lightning_damage_consumable_component_definition.gd" id="1_gcadg"]
 [ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_pvojs"]
-[ext_resource type="Texture2D" uid="uid://h7i8uiwlysq2" path="res://assets/images/kenney_1-bit-pack/monochrome_packed.png" id="3_1n6sd"]
+[ext_resource type="Texture2D" uid="uid://dh8txog2i0aex" path="res://assets/images/anikki_16x16.png" id="3_kj2ii"]
 
 [sub_resource type="Resource" id="Resource_w2ejf"]
 script = ExtResource("1_gcadg")
@@ -10,8 +10,8 @@ damage = 20
 maximum_range = 5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhmkh"]
-atlas = ExtResource("3_1n6sd")
-region = Rect2(528, 240, 16, 16)
+atlas = ExtResource("3_kj2ii")
+region = Rect2(176, 240, 16, 16)
 
 [resource]
 script = ExtResource("1_pvojs")
