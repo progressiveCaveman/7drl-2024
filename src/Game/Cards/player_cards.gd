@@ -46,7 +46,7 @@ func play_card(cardtype) -> bool:
 			discard.append(card)
 			hand.remove_at(i)
 			print_state()
-			emit_signal("hand_updated", hand)
+			emit_signal("hand_updated")
 			return true
 	
 	return false
