@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0g215upck1i3"]
+
+[ext_resource type="Texture2D" uid="uid://bc2l3hoemy2ln" path="res://assets/images/target_cursor.png" id="1_8nr8l"]
+[ext_resource type="Script" path="res://src/GUI/MovementTarget/movement_target_instance.gd" id="2_6r0fo"]
+
+[node name="MovementTargetInstance" type="TextureRect"]
+modulate = Color(0.580392, 0.878431, 0.537255, 0.552941)
+top_level = true
+offset_left = 99.0
+offset_top = 73.0
+offset_right = 115.0
+offset_bottom = 89.0
+texture = ExtResource("1_8nr8l")
+script = ExtResource("2_6r0fo")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

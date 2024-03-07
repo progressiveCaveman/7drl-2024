@@ -71,8 +71,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+grow_horizontal = 0
+alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 custom_minimum_size = Vector2(900, 0)
@@ -82,14 +82,14 @@ size_flags_horizontal = 3
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 5.0
+size_flags_stretch_ratio = 6.0
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(900, 536)
+size = Vector2i(900, 552)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport"]
@@ -130,6 +130,9 @@ script = ExtResource("5_bvmgb")
 script = ExtResource("9_eusf6")
 
 [node name="Reticle" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map" instance=ExtResource("11_n4t22")]
+
+[node name="MovementTargets" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+position = Vector2(904, 0)
 
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game"]
 zoom = Vector2(2, 2)
