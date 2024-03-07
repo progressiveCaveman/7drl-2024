@@ -22,7 +22,7 @@ func _ready() -> void:
 	map.update_fov(player.grid_position)
 	
 	MessageLog.send_message.bind(
-		"Hello and welcome, adventurer, to yet another dungeon!",
+		"The ORC TAVERN has erupted into violence once again!",
 		GameColors.WELCOME_TEXT
 	).call_deferred()
 	

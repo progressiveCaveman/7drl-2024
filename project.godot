@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Complete Roguelike Tutorial"
+config/name="Orc Tavern 7drl"
 run/main_scene="res://src/Game/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
