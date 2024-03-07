@@ -158,6 +158,7 @@ func _tunnel_between(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 func _tunnel_drunkard(dungeon: MapData, start: Vector2i, end: Vector2i) -> void:
 	var x = start.x
 	var y = start.y
+	_carve_tile(dungeon, x, y)
 	
 	while x != end.x || y != end.y:
 		var xdir = -1 if start.x > end.x else 1
