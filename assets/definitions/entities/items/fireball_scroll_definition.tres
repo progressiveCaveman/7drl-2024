@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/fireball_damage_consumable_component_definition.gd" id="1_4v7n7"]
 [ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_bw6j4"]
-[ext_resource type="Texture2D" uid="uid://dh8txog2i0aex" path="res://assets/images/anikki_16x16.png" id="3_pmror"]
+[ext_resource type="Texture2D" uid="uid://cihb3vii101yg" path="res://assets/images/anikki_16x16_black.png" id="3_yycf4"]
 
 [sub_resource type="Resource" id="Resource_osdja"]
 script = ExtResource("1_4v7n7")
@@ -10,7 +10,7 @@ damage = 12
 radius = 3
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6p1lc"]
-atlas = ExtResource("3_pmror")
+atlas = ExtResource("3_yycf4")
 region = Rect2(176, 240, 16, 16)
 
 [resource]

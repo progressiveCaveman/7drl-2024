@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/fighter_component_definition.gd" id="1_fc2yb"]
 [ext_resource type="Texture2D" uid="uid://cxqlsyurt7g4r" path="res://assets/resources/default_death_texture.tres" id="1_fkqvq"]
 [ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_q5qby"]
-[ext_resource type="Texture2D" uid="uid://dh8txog2i0aex" path="res://assets/images/anikki_16x16.png" id="4_0ob2i"]
+[ext_resource type="Texture2D" uid="uid://cihb3vii101yg" path="res://assets/images/anikki_16x16_black.png" id="4_g7xy6"]
 
 [sub_resource type="Resource" id="Resource_hmkve"]
 script = ExtResource("1_fc2yb")
@@ -14,7 +14,7 @@ death_texture = ExtResource("1_fkqvq")
 death_color = Color(0.545098, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xeb23"]
-atlas = ExtResource("4_0ob2i")
+atlas = ExtResource("4_g7xy6")
 region = Rect2(64, 80, 16, 16)
 
 [resource]
