@@ -3,6 +3,7 @@ extends Panel
 var CardType = Card.CardType
 @onready var label_title := $VBoxContainer/LabelTitle
 @onready var label_description := $VBoxContainer/LabelDescription
+var id = 0
 
 signal clicked(params: Array)
 
@@ -28,7 +29,7 @@ func _on_mouse_exited() -> void:
 	print("Mouse Exited: %s" % label_title.text)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == 1:
 			# left click
 			if label_title.text in movement_params:

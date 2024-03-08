@@ -6,6 +6,7 @@
 [node name="MovementTargetInstance" type="TextureRect"]
 modulate = Color(0.580392, 0.878431, 0.537255, 0.552941)
 top_level = true
+z_index = 2
 offset_left = 99.0
 offset_top = 73.0
 offset_right = 115.0
