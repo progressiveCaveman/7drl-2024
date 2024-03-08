@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=7 format=3 uid="uid://d3e57ggqesuyy"]
+
+[ext_resource type="Texture2D" uid="uid://cxqlsyurt7g4r" path="res://assets/resources/default_death_texture.tres" id="1_6tox4"]
+[ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/fighter_component_definition.gd" id="2_kllk0"]
+[ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="3_8nxcl"]
+[ext_resource type="Texture2D" uid="uid://cihb3vii101yg" path="res://assets/images/anikki_16x16_black.png" id="4_xt6y0"]
+
+[sub_resource type="Resource" id="Resource_hmkve"]
+script = ExtResource("2_kllk0")
+max_hp = 16
+power = 4
+defense = 1
+death_texture = ExtResource("1_6tox4")
+death_color = Color(0.545098, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeb23"]
+atlas = ExtResource("4_xt6y0")
+region = Rect2(32, 112, 16, 16)
+
+[resource]
+script = ExtResource("3_8nxcl")
+name = "Rat"
+texture = SubResource("AtlasTexture_xeb23")
+color = Color(0.364706, 0.380392, 0.34902, 1)
+is_blocking_movment = true
+type = 2
+fighter_definition = SubResource("Resource_hmkve")
+ai_type = 1
+inventory_capacity = 0

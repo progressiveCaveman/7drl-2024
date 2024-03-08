@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="1_7c6k3"]
 [ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/confusion_consumable_component_definition.gd" id="1_pyxgx"]
-[ext_resource type="Texture2D" uid="uid://h7i8uiwlysq2" path="res://assets/images/kenney_1-bit-pack/monochrome_packed.png" id="3_s1i5h"]
+[ext_resource type="Texture2D" uid="uid://cihb3vii101yg" path="res://assets/images/anikki_16x16_black.png" id="3_buqg8"]
 
 [sub_resource type="Resource" id="Resource_33vsa"]
 script = ExtResource("1_pyxgx")
 number_of_turns = 10
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vqqtp"]
-atlas = ExtResource("3_s1i5h")
-region = Rect2(528, 240, 16, 16)
+atlas = ExtResource("3_buqg8")
+region = Rect2(176, 240, 16, 16)
 
 [resource]
 script = ExtResource("1_7c6k3")

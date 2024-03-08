@@ -19,7 +19,6 @@ func _ready() -> void:
 	pass
 
 func _on_hand_updated() -> void:
-	current_hand.clear()
 	current_hand = PlayerCards.hand
 	hand_size = current_hand.size()
 	update_panel()

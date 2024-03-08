@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Complete Roguelike Tutorial"
+config/name="Orc Tavern 7drl"
 run/main_scene="res://src/Game/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -23,6 +23,11 @@ PlayerCards="*res://src/Game/Cards/player_cards.gd"
 [debug]
 
 settings/gdscript/max_call_stack=2047
+
+[display]
+
+window/size/viewport_width=1500
+window/size/viewport_height=900
 
 [input]
 

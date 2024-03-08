@@ -14,6 +14,7 @@ func _init(msg_text: String, foreground_color: Color) -> void:
 	plain_text = msg_text
 	label_settings = base_label_settings.duplicate()
 	label_settings.font_color = foreground_color
+	label_settings.font_size = 32
 	text = plain_text
 	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
