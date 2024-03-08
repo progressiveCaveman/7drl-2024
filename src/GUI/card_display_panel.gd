@@ -115,4 +115,4 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int) -> void
 		if game.player.grid_position == item.grid_position:
 			action = PickupAction.new(game.player)
 			action.perform()
-	game.new_turn()
+	PlayerCards.actions -= 1

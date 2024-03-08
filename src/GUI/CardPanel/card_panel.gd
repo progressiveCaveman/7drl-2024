@@ -37,23 +37,23 @@ func _on_gui_input(event: InputEvent) -> void:
 				Card.CardType.Pawn:
 					emit_signal('clicked', movement_params[label_title.text])
 				Card.CardType.Rook:
-					emit_signal('clicked', movement_params[label_title.text])
 					PlayerCards.draw_card()
+					emit_signal('clicked', movement_params[label_title.text])
 				Card.CardType.Damage1:
 					PlayerCards.damage_mod += 1
 				Card.CardType.Knight:
-					emit_signal('clicked', movement_params[label_title.text])
 					PlayerCards.actions += 1
-				Card.CardType.Queen:
 					emit_signal('clicked', movement_params[label_title.text])
+				Card.CardType.Queen:
 					PlayerCards.actions += 2
 					PlayerCards.draw_card()
-				Card.CardType.King:
 					emit_signal('clicked', movement_params[label_title.text])
+				Card.CardType.King:
 					PlayerCards.actions += 1
 					PlayerCards.draw_card()
 					PlayerCards.draw_card()
 					PlayerCards.draw_card()
+					emit_signal('clicked', movement_params[label_title.text])
 				Card.CardType.Damage2:
 					PlayerCards.damage_mod += 2
 				_:
