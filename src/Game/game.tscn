@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://n87rw5cxnnn8"]
+[gd_scene load_steps=27 format=3 uid="uid://n87rw5cxnnn8"]
 
 [ext_resource type="Script" path="res://src/Game/game.gd" id="1_ne6pe"]
 [ext_resource type="Script" path="res://src/Game/EventHandlers/input_handler.gd" id="2_4winb"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://d36pgskfsvwj2" path="res://src/GUI/Reticle/reticle.tscn" id="11_n4t22"]
 [ext_resource type="Script" path="res://src/GUI/message_log.gd" id="11_xxafc"]
 [ext_resource type="Script" path="res://src/GUI/action_display.gd" id="15_yxx65"]
+[ext_resource type="Script" path="res://src/GUI/damage_display.gd" id="16_n5p52"]
 [ext_resource type="Script" path="res://src/GUI/card_display_panel.gd" id="16_on26a"]
 [ext_resource type="PackedScene" uid="uid://dndq5iahsttml" path="res://src/GUI/CardPanel/card_panel.tscn" id="17_vnefh"]
 
@@ -188,6 +189,17 @@ text = "Actions: 1"
 label_settings = SubResource("LabelSettings_c11as")
 vertical_alignment = 1
 
+[node name="DamageDisplay" type="MarginContainer" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("16_n5p52")
+
+[node name="DamageLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Damage Modifier: 1"
+label_settings = SubResource("LabelSettings_c11as")
+vertical_alignment = 1
+
 [node name="MouseoverLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -231,4 +243,5 @@ size_flags_horizontal = 1
 
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
+[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay" method="initialize"]
 [connection signal="entities_focussed" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MouseoverChecker" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/MouseoverLabel" method="set_text"]

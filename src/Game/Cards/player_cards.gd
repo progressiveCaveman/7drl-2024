@@ -9,17 +9,19 @@ const starting_deck = [
 
 signal hand_updated()
 signal actions_changed(actions)
+signal damage_changed(damage)
 
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
-@export var damage_mod = 0 # amt of damage played, this shouldn't live here but it's convenient for now
+@export var damage_mod = 0: # amt of damage played, this shouldn't live here but it's convenient for now
+	set(value):
+		damage_mod = value
+		emit_signal('damage_changed', value)
 @export var actions = 0:  # num actions remaining until enemies act
 	set(value):
 		actions = value
-		#actions_changed.emit(value)
 		emit_signal('actions_changed', value)
-		print("actions: %s" % value)
 
 func _init() -> void:
 	for c in starting_deck:
