@@ -94,7 +94,7 @@ func place_targets(target_array: Array, position: Vector2i, infinite: bool, iter
 	#var card_gap = (window_size.y - v_margins) / hand_size
 
 func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int) -> void:
-	var current_card : Card = PlayerCards.hand[current_id]
+	#var current_card : Card = PlayerCards.hand[current_id]
 	#PlayerCards.discard_card(current_card.type)
 	
 	
@@ -115,5 +115,4 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int) -> void
 		if game.player.grid_position == item.grid_position:
 			action = PickupAction.new(game.player)
 			action.perform()
-	game._handle_enemy_turns()
-	game.map.update_fov(game.player.grid_position)
+	game.new_turn()

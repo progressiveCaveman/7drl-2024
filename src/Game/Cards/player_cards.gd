@@ -4,7 +4,8 @@ const starting_deck = [
 	Card.CardType.Pawn, Card.CardType.Pawn, 
 	Card.CardType.Knight, Card.CardType.Knight, 
 	Card.CardType.Rook, Card.CardType.Rook, 
-	Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1]
+	Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1, Card.CardType.Damage1
+]
 
 signal hand_updated()
 
@@ -12,6 +13,7 @@ signal hand_updated()
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
 @export var damage_mod = 0 # amt of damage played, this shouldn't live here but it's convenient for now
+@export var actions = 0  # num actions remaining until enemies act
 
 func _init() -> void:
 	for c in starting_deck:
@@ -28,6 +30,10 @@ func draw_card():
 		hand.append(library.pop_front())
 		emit_signal("hand_updated")
 
+func draw_to_five():
+	while hand.size() < 5 && (library.size() > 0 || discard.size() > 0):
+		draw_card()
+
 func discard_card(card: Card.CardType) -> void: 
 	discard.append(card)
 
@@ -40,15 +46,17 @@ func gain_card(cardtype: Card.CardType) -> void:
 	discard.append(Card.new(cardtype))
 
 func play_card(cardtype) -> bool:
+
+	
 	for i in range(0, hand.size()):
-		var card = hand[i]
-		if card.type == cardtype:
+		if hand[i].type == cardtype:
+			var card = hand[i]
 			discard.append(card)
 			hand.remove_at(i)
 			print_state()
 			emit_signal("hand_updated")
 			return true
-	
+			
 	return false
 
 func print_state():
@@ -61,3 +69,33 @@ func print_state():
 	print("Discard:")
 	for card in discard:
 		print("  %s" % card.name)
+
+func title_to_type(title) -> Card.CardType:
+	if title == "Pawn":
+		return Card.CardType.Pawn
+	#if title == "Bishop":
+		#return Card.CardType.Bishop
+	if title == "Rook":
+		return Card.CardType.Rook
+	if title == "Knight":
+		return Card.CardType.Knight
+	if title == "Queen":
+		return Card.CardType.Queen
+	if title == "King":
+		return Card.CardType.King
+	if title == "+1 Damage":
+		return Card.CardType.Damage1
+	if title == "+2 Damage":
+		return Card.CardType.Damage2
+		
+	print("failed to find card")
+	return Card.CardType.Error
+	
+	#
+	#"Pawn" : [Vector2( 1, 1), false],
+	#"Bishop" : [Vector2( 1, 1), true],
+	#"Rook" : [Vector2( 1, 0), true],
+	#"Knight" : [Vector2( 2, 1), false],
+	#"Queen" : [Vector2( 1, 1), true, Vector2(1, 0)],
+	#"King" : [Vector2( 1, 1), false, Vector2(1, 0)],
+	#"Error" : [Vector2( 0, 0), false],

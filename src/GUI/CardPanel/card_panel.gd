@@ -15,25 +15,51 @@ var movement_params = {
 	"Queen" : [Vector2( 1, 1), true, Vector2(1, 0)],
 	"King" : [Vector2( 1, 1), false, Vector2(1, 0)],
 	"Error" : [Vector2( 0, 0), false],
-	}
+}
 
 func set_text(text: String, desc: String) -> void:
 	label_title.text = text
 	label_description.text = desc
 
-func _on_mouse_entered() -> void:
-	print("Mouse Entered: %s" % label_title.text)
-	
-
-func _on_mouse_exited() -> void:
-	print("Mouse Exited: %s" % label_title.text)
+#func _on_mouse_entered() -> void:
+	#print("Mouse Entered: %s" % label_title.text)
+	#
+#
+#func _on_mouse_exited() -> void:
+	#print("Mouse Exited: %s" % label_title.text)
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == 1:
 			# left click
-			if label_title.text in movement_params:
-				emit_signal('clicked', movement_params[label_title.text])
+			var cardt = PlayerCards.title_to_type(label_title.text)
+			match cardt:
+				Card.CardType.Pawn:
+					emit_signal('clicked', movement_params[label_title.text])
+				Card.CardType.Rook:
+					emit_signal('clicked', movement_params[label_title.text])
+					PlayerCards.draw_card()
+				Card.CardType.Damage1:
+					PlayerCards.damage_mod += 1
+				Card.CardType.Knight:
+					emit_signal('clicked', movement_params[label_title.text])
+					PlayerCards.actions += 1
+				Card.CardType.Queen:
+					emit_signal('clicked', movement_params[label_title.text])
+					PlayerCards.actions += 2
+					PlayerCards.draw_card()
+				Card.CardType.King:
+					emit_signal('clicked', movement_params[label_title.text])
+					PlayerCards.actions += 1
+					PlayerCards.draw_card()
+					PlayerCards.draw_card()
+					PlayerCards.draw_card()
+				Card.CardType.Damage2:
+					PlayerCards.damage_mod += 2
+				_:
+					print("unhandled enum")
+					return
+			PlayerCards.play_card(cardt)
 			pass
 		elif event.button_index == 2:
 			# right click
