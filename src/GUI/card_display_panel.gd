@@ -12,8 +12,8 @@ var hand_size: int = 0
 
 
 func _ready() -> void:
-	game = get_parent().get_node("VBoxContainer/SubViewportContainer/SubViewport/Game")
-	targets_node = get_parent().get_node("VBoxContainer/SubViewportContainer/SubViewport/Game/Map/MovementTargets")
+	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
+	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
 	PlayerCards.hand_updated.connect(_on_hand_updated)
 	_on_hand_updated()
 	pass
