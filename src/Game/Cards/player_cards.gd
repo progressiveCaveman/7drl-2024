@@ -8,12 +8,18 @@ const starting_deck = [
 ]
 
 signal hand_updated()
+signal actions_changed(actions)
 
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
 @export var damage_mod = 0 # amt of damage played, this shouldn't live here but it's convenient for now
-@export var actions = 0  # num actions remaining until enemies act
+@export var actions = 0:  # num actions remaining until enemies act
+	set(value):
+		actions = value
+		#actions_changed.emit(value)
+		emit_signal('actions_changed', value)
+		print("actions: %s" % value)
 
 func _init() -> void:
 	for c in starting_deck:
@@ -46,14 +52,12 @@ func gain_card(cardtype: Card.CardType) -> void:
 	discard.append(Card.new(cardtype))
 
 func play_card(cardtype) -> bool:
-
-	
 	for i in range(0, hand.size()):
 		if hand[i].type == cardtype:
 			var card = hand[i]
 			discard.append(card)
 			hand.remove_at(i)
-			print_state()
+			#print_state()
 			emit_signal("hand_updated")
 			return true
 			

@@ -116,3 +116,4 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int) -> void
 			action = PickupAction.new(game.player)
 			action.perform()
 	PlayerCards.actions -= 1
+	game.map.update_fov(game.player.grid_position)

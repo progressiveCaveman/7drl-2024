@@ -42,7 +42,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				Card.CardType.Damage1:
 					PlayerCards.damage_mod += 1
 				Card.CardType.Knight:
-					PlayerCards.actions += 1
+					PlayerCards.actions += 2
 					emit_signal('clicked', movement_params[label_title.text])
 				Card.CardType.Queen:
 					PlayerCards.actions += 2

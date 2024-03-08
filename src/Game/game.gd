@@ -40,6 +40,7 @@ func _physics_process(_delta: float) -> void:
 			new_turn()
 
 func new_turn():
+	print("new turn")
 	_handle_enemy_turns()
 	PlayerCards.draw_to_five()
 	PlayerCards.actions = 1
