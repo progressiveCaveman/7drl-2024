@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*res://src/Utils/signal_bus.gd"
 PlayerCards="*res://src/Game/Cards/player_cards.gd"
+MovementController="*res://src/Utils/movement_controller.gd"
 
 [debug]
 
