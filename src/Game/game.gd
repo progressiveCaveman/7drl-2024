@@ -10,6 +10,7 @@ const tile_size = 16
 @onready var input_handler: InputHandler = $InputHandler
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
+@onready var targets_node: Node2D = $Map/MovementTargets
 
 func _ready() -> void:
 	player = Entity.new(null, Vector2i.ZERO, player_definition)
@@ -25,7 +26,8 @@ func _ready() -> void:
 		"The ORC TAVERN has erupted into violence once again!",
 		GameColors.WELCOME_TEXT
 	).call_deferred()
-	
+	MovementController.game = self
+	MovementController.targets_node = targets_node
 	camera.make_current.call_deferred()
 
 
