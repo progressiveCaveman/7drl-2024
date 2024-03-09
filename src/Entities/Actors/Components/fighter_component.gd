@@ -57,6 +57,14 @@ func die() -> void:
 		death_message_color = GameColors.ENEMY_DIE
 	
 	MessageLog.send_message(death_message, death_message_color)
+	
+	for i in entity.inventory_component.items:
+		if i.consumable_component is GoldConsumableComponent:
+			get_map_data().player.inventory_component.recieve_gold(i.consumable_component.amount)
+			MessageLog.send_message("You gain %s gold!" % i.consumable_component.amount, GameColors.INVALID)
+		else:
+			entity.inventory_component.drop(i)
+	
 	entity.texture = death_texture
 	entity.modulate = death_color
 	entity.ai_component.queue_free()
@@ -64,6 +72,4 @@ func die() -> void:
 	entity.entity_name = "Remains of %s" % entity.entity_name
 	entity.blocks_movement = false
 	entity.type = Entity.EntityType.CORPSE
-	for i in entity.inventory_component.items:
-		entity.inventory_component.drop(i)
 	get_map_data().unregister_blocking_entity(entity)

@@ -219,23 +219,23 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 				RoomSpawnType.Orcs:
 					new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
 					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
-					item_1.consumable_component.set_amount(_rng.randi_range(4, 8))
+					item_1.consumable_component.set_amount(_rng.randi_range(1, 2))
 					new_entity.inventory_component.items.append(item_1)
 				RoomSpawnType.Rats:
 					new_entity = Entity.new(dungeon, new_entity_position, entity_types.rat)
 					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
-					item_1.consumable_component.set_amount(_rng.randi_range(2,3))
+					item_1.consumable_component.set_amount(1)
 					new_entity.inventory_component.items.append(item_1)
 				RoomSpawnType.TrollAndOrc:
 					if _rng.randf() < 0.8:
 						new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
 						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
-						item_1.consumable_component.set_amount(_rng.randi_range(5, 9))
+						item_1.consumable_component.set_amount(_rng.randi_range(1, 3))
 						new_entity.inventory_component.items.append(item_1)
 					else:
 						new_entity = Entity.new(dungeon, new_entity_position, entity_types.troll)
 						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
-						item_1.consumable_component.set_amount(_rng.randi_range(8, 16))
+						item_1.consumable_component.set_amount(_rng.randi_range(2, 4))
 						new_entity.inventory_component.items.append(item_1)
 						
 				_:
