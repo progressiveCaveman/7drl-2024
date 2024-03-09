@@ -24,6 +24,17 @@
 atlas = ExtResource("8_kgm6f")
 region = Rect2(768, 336, 16, 16)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84atu"]
+content_margin_left = 0.0
+content_margin_top = 8.0
+content_margin_right = 0.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_q7j4i")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ey3id"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -51,17 +62,6 @@ outline_color = Color(0, 0, 0, 1)
 font = ExtResource("9_8xlja")
 font_size = 32
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84atu"]
-content_margin_left = 0.0
-content_margin_top = 8.0
-content_margin_right = 0.0
-content_margin_bottom = 8.0
-texture = SubResource("AtlasTexture_q7j4i")
-texture_margin_left = 5.0
-texture_margin_top = 5.0
-texture_margin_right = 5.0
-texture_margin_bottom = 5.0
-
 [node name="InterfaceRoot" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -79,22 +79,21 @@ grow_horizontal = 0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(900, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 20.0
+size_flags_stretch_ratio = 4.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 6.0
+size_flags_stretch_ratio = 3.0
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1246, 768)
+size = Vector2i(1196, 880)
 render_target_update_mode = 4
 
 [node name="Game" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport"]
@@ -112,8 +111,8 @@ script = ExtResource("4_gxmdu")
 
 [node name="HistoryViewerInputHandler" type="Node" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("5_hrkyq")
-messages_panel_path = NodePath("../../../../../InfoBar/MessagesPanel")
-message_log_path = NodePath("../../../../../InfoBar/MessagesPanel/MessageLog")
+messages_panel_path = NodePath("../../../../../../InfoBar/MessagesPanel")
+message_log_path = NodePath("../../../../../../InfoBar/MessagesPanel/MessageLog")
 
 [node name="DummyInputHandler" type="Node" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/InputHandler"]
 script = ExtResource("6_ay8ab")
@@ -142,25 +141,45 @@ position = Vector2(904, 0)
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game"]
 zoom = Vector2(2, 2)
 
-[node name="InfoBar" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
+script = ExtResource("16_on26a")
+
+[node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="CardVBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardPanel" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
+visible = false
+custom_minimum_size = Vector2(250, 150)
+layout_mode = 2
+
+[node name="InfoBar" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="StatsPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer/InfoBar"]
+[node name="StatsPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
 custom_minimum_size = Vector2(160, 128)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/StatsPanel"]
 layout_mode = 2
+alignment = 1
 
-[node name="HpDisplay" type="MarginContainer" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+[node name="HpDisplay" type="MarginContainer" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("9_njvq4")
 
-[node name="HpBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
+[node name="HpBar" type="ProgressBar" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -171,75 +190,37 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="HpLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
+[node name="HpLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "HP:30/30"
 label_settings = SubResource("LabelSettings_c11as")
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ActionDisplay" type="MarginContainer" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("15_yxx65")
-
-[node name="ActionLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Actions: 1"
-label_settings = SubResource("LabelSettings_c11as")
-vertical_alignment = 1
-
-[node name="DamageDisplay" type="MarginContainer" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("16_n5p52")
-
-[node name="DamageLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Damage Modifier: 1"
-label_settings = SubResource("LabelSettings_c11as")
-vertical_alignment = 1
-
-[node name="MouseoverLabel" type="Label" parent="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+[node name="MouseoverLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 label_settings = SubResource("LabelSettings_sr2kr")
+horizontal_alignment = 1
 
-[node name="MessagesPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer/InfoBar"]
+[node name="MessagesPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_ey3id")
 
-[node name="MessageLog" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/InfoBar/MessagesPanel"]
+[node name="MessageLog" type="ScrollContainer" parent="HBoxContainer/InfoBar/MessagesPanel"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 script = ExtResource("11_xxafc")
 
-[node name="MessageList" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/InfoBar/MessagesPanel/MessageLog"]
+[node name="MessageList" type="VBoxContainer" parent="HBoxContainer/InfoBar/MessagesPanel/MessageLog"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(250, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
-script = ExtResource("16_on26a")
-
-[node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/CardDisplayPanel"]
-layout_mode = 2
-
-[node name="CardVBox" type="VBoxContainer" parent="HBoxContainer/CardDisplayPanel/CardScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CardPanel" parent="HBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
-custom_minimum_size = Vector2(250, 150)
-layout_mode = 2
-size_flags_horizontal = 1
 
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
