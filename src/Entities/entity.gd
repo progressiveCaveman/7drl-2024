@@ -88,6 +88,8 @@ func is_alive() -> bool:
 func _handle_consumable(consumable_definition: ConsumableComponentDefinition) -> void:
 	if consumable_definition is HealingConsumableComponentDefinition:
 		consumable_component = HealingConsumableComponent.new(consumable_definition)
+	if consumable_definition is GoldConsumableComponentDefinition:
+		consumable_component = GoldConsumableComponent.new(consumable_definition)
 	elif consumable_definition is LightningDamageConsumableComponentDefinition:
 		consumable_component = LightningDamageConsumableComponent.new(consumable_definition)
 	elif consumable_definition is ConfusionConsumableComponentDefinition:

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EntityDefinition" load_steps=6 format=3 uid="uid://b57xxsd12o8p7"]
+
+[ext_resource type="Script" path="res://src/Entities/Actors/Components/ComponentDefinitions/gold_consumable_component_definition.gd" id="1_28mgy"]
+[ext_resource type="Script" path="res://src/Entities/entity_definition.gd" id="2_o804o"]
+[ext_resource type="Texture2D" uid="uid://dh8txog2i0aex" path="res://assets/images/anikki_16x16.png" id="3_uul7y"]
+
+[sub_resource type="Resource" id="Resource_cy5pe"]
+script = ExtResource("1_28mgy")
+gold_amount = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y51gf"]
+atlas = ExtResource("3_uul7y")
+region = Rect2(176, 144, 16, 16)
+
+[resource]
+script = ExtResource("2_o804o")
+name = "Gold Stack"
+texture = SubResource("AtlasTexture_y51gf")
+color = Color(1, 1, 0.352941, 1)
+is_blocking_movment = false
+type = 1
+ai_type = 0
+consumable_definition = SubResource("Resource_cy5pe")
+inventory_capacity = 0

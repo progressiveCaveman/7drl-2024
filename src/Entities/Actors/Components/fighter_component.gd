@@ -64,4 +64,6 @@ func die() -> void:
 	entity.entity_name = "Remains of %s" % entity.entity_name
 	entity.blocks_movement = false
 	entity.type = Entity.EntityType.CORPSE
+	for i in entity.inventory_component.items:
+		entity.inventory_component.drop(i)
 	get_map_data().unregister_blocking_entity(entity)

@@ -9,6 +9,7 @@ const entity_types = {
 	"lightning_scroll": preload("res://assets/definitions/entities/items/lightning_scroll_definition.tres"),
 	"confusion_scroll": preload("res://assets/definitions/entities/items/confusion_scroll_definition.tres"),
 	"fireball_scroll": preload("res://assets/definitions/entities/items/fireball_scroll_definition.tres"),
+	"gold_stack": preload("res://assets/definitions/entities/items/gold_stack_definition.tres")
 }
 
 @export_category("Map Dimensions")
@@ -211,16 +212,32 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 		if can_place:
 			monsters_placed += 1
 			var new_entity: Entity
+			var item_1: Entity
+			var item_2: Entity
+			var item_3: Entity
 			match roomtype:
 				RoomSpawnType.Orcs:
 					new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
+					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+					item_1.consumable_component.set_amount(_rng.randi_range(4, 8))
+					new_entity.inventory_component.items.append(item_1)
 				RoomSpawnType.Rats:
 					new_entity = Entity.new(dungeon, new_entity_position, entity_types.rat)
+					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+					item_1.consumable_component.set_amount(_rng.randi_range(2,3))
+					new_entity.inventory_component.items.append(item_1)
 				RoomSpawnType.TrollAndOrc:
 					if _rng.randf() < 0.8:
 						new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
+						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+						item_1.consumable_component.set_amount(_rng.randi_range(5, 9))
+						new_entity.inventory_component.items.append(item_1)
 					else:
 						new_entity = Entity.new(dungeon, new_entity_position, entity_types.troll)
+						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+						item_1.consumable_component.set_amount(_rng.randi_range(8, 16))
+						new_entity.inventory_component.items.append(item_1)
+						
 				_:
 					continue
 			

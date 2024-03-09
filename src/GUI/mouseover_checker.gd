@@ -32,5 +32,5 @@ func get_names_at_location(grid_position: Vector2i) -> String:
 	if not entities_at_location.is_empty():
 		entity_names = entities_at_location[0].get_entity_name()
 		for i in range(1, entities_at_location.size()):
-			entity_names += ", %s" % entities_at_location[i].get_entity_name()
+			entity_names += ",\n%s" % entities_at_location[i].get_entity_name()
 	return entity_names
