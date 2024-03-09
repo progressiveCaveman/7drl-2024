@@ -30,14 +30,24 @@ func _ready() -> void:
 	MovementController.targets_node = targets_node
 	camera.make_current.call_deferred()
 
+
 func _physics_process(_delta: float) -> void:
+	if PlayerCards.actions <= 0:
+		new_turn()
+	
 	var action: Action = await input_handler.get_action(player)
 	if action:
 		var previous_player_position: Vector2i = player.grid_position
 		if action.perform():
-			_handle_enemy_turns()
-			map.update_fov(player.grid_position)
+			new_turn()
 
+func new_turn():
+	print("new turn")
+	_handle_enemy_turns()
+	PlayerCards.draw_to_five()
+	PlayerCards.actions = 1
+	map.update_fov(player.grid_position)
+	
 
 func _handle_enemy_turns() -> void:
 	for entity in get_map_data().entities:

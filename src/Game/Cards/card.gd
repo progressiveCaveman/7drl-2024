@@ -47,7 +47,7 @@ Add 1 damage to next attack
 			name = "Knight"
 			description = """
 Move like knight
-+1 action
++2 actions
 """
 		CardType.Queen:
 			type = card

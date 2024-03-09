@@ -75,7 +75,7 @@ func choose_target(actor: Entity, target_array: Array):
 	return current_target
 
 func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int, actor: Entity) -> void:
-	var current_card : Card = PlayerCards.hand[current_id]
+	#var current_card : Card = PlayerCards.hand[current_id]
 	#PlayerCards.discard_card(current_card.type)
 	
 	
@@ -98,5 +98,5 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int, actor: 
 			action = PickupAction.new(game.player)
 			action.perform()
 	if actor.entity_name == "Player":
-		game._handle_enemy_turns()
+		PlayerCards.actions -= 1
 		game.map.update_fov(game.player.grid_position)
