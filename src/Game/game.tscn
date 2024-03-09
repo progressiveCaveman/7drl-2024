@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://n87rw5cxnnn8"]
+[gd_scene load_steps=27 format=3 uid="uid://n87rw5cxnnn8"]
 
 [ext_resource type="Script" path="res://src/Game/game.gd" id="1_ne6pe"]
 [ext_resource type="Script" path="res://src/Game/EventHandlers/input_handler.gd" id="2_4winb"]
@@ -16,7 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://d36pgskfsvwj2" path="res://src/GUI/Reticle/reticle.tscn" id="11_n4t22"]
 [ext_resource type="Script" path="res://src/GUI/message_log.gd" id="11_xxafc"]
 [ext_resource type="Script" path="res://src/GUI/card_display_panel.gd" id="16_on26a"]
+[ext_resource type="Script" path="res://src/GUI/action_display.gd" id="17_vg2rf"]
 [ext_resource type="PackedScene" uid="uid://dndq5iahsttml" path="res://src/GUI/CardPanel/card_panel.tscn" id="17_vnefh"]
+[ext_resource type="Script" path="res://src/GUI/damage_display.gd" id="18_nvjr5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7j4i"]
 atlas = ExtResource("8_kgm6f")
@@ -196,6 +198,30 @@ label_settings = SubResource("LabelSettings_c11as")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ActionDisplay" type="MarginContainer" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("17_vg2rf")
+
+[node name="ActionLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HP:30/30"
+label_settings = SubResource("LabelSettings_c11as")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageDisplay" type="MarginContainer" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("18_nvjr5")
+
+[node name="DamageLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HP:30/30"
+label_settings = SubResource("LabelSettings_c11as")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MouseoverLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -219,3 +245,7 @@ script = ExtResource("11_xxafc")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
+[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
+[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay" method="initialize"]

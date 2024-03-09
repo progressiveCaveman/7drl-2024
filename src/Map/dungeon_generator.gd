@@ -69,6 +69,8 @@ func generate_dungeon(player:Entity) -> MapData:
 	
 	for room in rooms:
 		_place_entities(dungeon, room)
+		
+	_place_a_fuckton_of_enemies(dungeon)
 	
 	dungeon.setup_pathfinding()
 	return dungeon
@@ -267,4 +269,55 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.confusion_scroll)
 			else:
 				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_scroll)
+			dungeon.entities.append(new_entity)
+
+
+func _place_a_fuckton_of_enemies(dungeon: MapData) -> void:
+	var number_of_monsters: int = _rng.randi_range(75, 150)
+	var roomtype: RoomSpawnType = _rng.randi_range(0, 3)
+	
+	var monsters_placed = 0
+	while monsters_placed < number_of_monsters:
+		var x: int = _rng.randi_range(0, dungeon.width - 1)
+		var y: int = _rng.randi_range(0, dungeon.height - 1)
+		var new_entity_position := Vector2i(x, y)
+		
+		var can_place = dungeon.get_tile(new_entity_position).is_walkable()
+		for entity in dungeon.entities:
+			if entity.grid_position == new_entity_position:
+				can_place = false
+				break
+		
+		if can_place:
+			monsters_placed += 1
+			var new_entity: Entity
+			var item_1: Entity
+			var item_2: Entity
+			var item_3: Entity
+			match roomtype:
+				RoomSpawnType.Orcs:
+					new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
+					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+					item_1.consumable_component.set_amount(_rng.randi_range(1, 2))
+					new_entity.inventory_component.items.append(item_1)
+				RoomSpawnType.Rats:
+					new_entity = Entity.new(dungeon, new_entity_position, entity_types.rat)
+					item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+					item_1.consumable_component.set_amount(1)
+					new_entity.inventory_component.items.append(item_1)
+				RoomSpawnType.TrollAndOrc:
+					if _rng.randf() < 0.8:
+						new_entity = Entity.new(dungeon, new_entity_position, entity_types.orc)
+						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+						item_1.consumable_component.set_amount(_rng.randi_range(1, 3))
+						new_entity.inventory_component.items.append(item_1)
+					else:
+						new_entity = Entity.new(dungeon, new_entity_position, entity_types.troll)
+						item_1 = Entity.new(dungeon, new_entity_position, entity_types.gold_stack)
+						item_1.consumable_component.set_amount(_rng.randi_range(2, 4))
+						new_entity.inventory_component.items.append(item_1)
+						
+				_:
+					continue
+			
 			dungeon.entities.append(new_entity)

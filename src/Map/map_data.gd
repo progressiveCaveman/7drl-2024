@@ -53,6 +53,7 @@ func get_tile_xy(x: int, y: int) -> Tile:
 func get_tile(grid_position: Vector2i) -> Tile:
 	var tile_index: int = grid_to_index(grid_position)
 	if tile_index == -1:
+		print("tile not found")
 		return null
 	return tiles[tile_index]
 
