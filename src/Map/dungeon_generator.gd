@@ -246,31 +246,31 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 			
 			dungeon.entities.append(new_entity)
 	
-	var items_placed = 0	
-	while items_placed < number_of_items:
-		var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
-		var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
-		var new_entity_position := Vector2i(x, y)
-		
-		var can_place = dungeon.get_tile(new_entity_position).is_walkable()
-		for entity in dungeon.entities:
-			if entity.grid_position == new_entity_position:
-				can_place = false
-				break
-		
-		if can_place:
-			items_placed += 1
-			var item_chance: float = _rng.randf()
-			var new_entity: Entity
-			if item_chance < 0.7:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.health_potion)
-			elif item_chance < 0.8:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.fireball_scroll)
-			elif item_chance < 0.9:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.confusion_scroll)
-			else:
-				new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_scroll)
-			dungeon.entities.append(new_entity)
+	#var items_placed = 0	
+	#while items_placed < number_of_items:
+		#var x: int = _rng.randi_range(room.position.x + 1, room.end.x - 1)
+		#var y: int = _rng.randi_range(room.position.y + 1, room.end.y - 1)
+		#var new_entity_position := Vector2i(x, y)
+		#
+		#var can_place = dungeon.get_tile(new_entity_position).is_walkable()
+		#for entity in dungeon.entities:
+			#if entity.grid_position == new_entity_position:
+				#can_place = false
+				#break
+		#
+		#if can_place:
+			#items_placed += 1
+			#var item_chance: float = _rng.randf()
+			#var new_entity: Entity
+			#if item_chance < 0.7:
+				#new_entity = Entity.new(dungeon, new_entity_position, entity_types.health_potion)
+			#elif item_chance < 0.8:
+				#new_entity = Entity.new(dungeon, new_entity_position, entity_types.fireball_scroll)
+			#elif item_chance < 0.9:
+				#new_entity = Entity.new(dungeon, new_entity_position, entity_types.confusion_scroll)
+			#else:
+				#new_entity = Entity.new(dungeon, new_entity_position, entity_types.lightning_scroll)
+			#dungeon.entities.append(new_entity)
 
 
 func _place_a_fuckton_of_enemies(dungeon: MapData) -> void:
