@@ -1,5 +1,6 @@
 extends PanelContainer
 
+
 @onready var end_turn_button = $VBoxContainer/HBoxContainer/EndTurnButton
 @onready var inventory_button = $VBoxContainer/HBoxContainer/VBoxContainer/InventoryButton
 @onready var card_market_button = $VBoxContainer/HBoxContainer/VBoxContainer/CardMarketButton
@@ -16,6 +17,7 @@ func _ready() -> void:
 
 func _on_end_turn_pressed() -> void:
 	print("end turn")
+	SignalBus.end_turn.emit()
 
 func _on_inventory_pressed() -> void:
 	Input.action_press("activate")

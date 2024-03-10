@@ -29,6 +29,7 @@ func _ready() -> void:
 	MovementController.game = self
 	MovementController.targets_node = targets_node
 	camera.make_current.call_deferred()
+	SignalBus.end_turn.connect(new_turn)
 
 
 func _physics_process(_delta: float) -> void:
