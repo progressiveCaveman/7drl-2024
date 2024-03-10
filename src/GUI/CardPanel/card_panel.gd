@@ -73,6 +73,24 @@ func _on_gui_input(event: InputEvent) -> void:
 					emit_signal('clicked', movement_params[label_title.text])
 				Card.CardType.Damage2:
 					PlayerCards.damage_mod += 2
+				Card.CardType.Bishop:
+					PlayerCards.damage_mod += 2
+					emit_signal('clicked', movement_params[label_title.text])
+				Card.CardType.Trasher:
+					print("trash not implemented")
+				Card.CardType.Village:
+					PlayerCards.actions += 2
+					PlayerCards.draw_card()
+				Card.CardType.Laboratory:
+					PlayerCards.actions += 1
+					PlayerCards.draw_card()
+					PlayerCards.draw_card()
+				Card.CardType.MagicMissile:
+					print("MagicMissile not implemented")
+				Card.CardType.Fireball:
+					print("Fireball not implemented")
+				Card.CardType.Cleave:
+					print("Cleave not implemented")
 				_:
 					print("unhandled enum")
 					return
