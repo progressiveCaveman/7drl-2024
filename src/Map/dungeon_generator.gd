@@ -15,6 +15,7 @@ const entity_types = {
 @export_category("Map Dimensions")
 @export var map_width: int = 80
 @export var map_height: int = 45
+@export var depth: int = 1
 
 @export_category("Rooms RNG")
 @export var max_rooms: int = 30
@@ -273,7 +274,8 @@ func _place_entities(dungeon: MapData, room: Rect2i) -> void:
 
 
 func _place_a_fuckton_of_enemies(dungeon: MapData) -> void:
-	var number_of_monsters: int = _rng.randi_range(75, 150)
+	var min_monsters = depth * 75
+	var number_of_monsters: int = _rng.randi_range(min_monsters, min_monsters * 2)
 	var roomtype: RoomSpawnType = _rng.randi_range(0, 3)
 	
 	var monsters_placed = 0
