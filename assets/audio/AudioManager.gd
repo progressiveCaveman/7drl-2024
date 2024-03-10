@@ -38,3 +38,13 @@ func play_sound(sound_library: String, sound_title: String, pitch_variation: flo
 	elif sound_player.pitch_scale != 1.0:
 		sound_player.pitch_scale = 1.0
 	sound_player.play()
+
+func change_volume(volume, bus):
+	AudioServer.set_bus_volume_db(bus, linear_to_db(volume))
+
+func mute(bus):
+	if AudioServer.is_bus_mute(bus) == false:
+		AudioServer.set_bus_mute(bus, true)
+	else:
+		
+		AudioServer.set_bus_mute(bus, false)

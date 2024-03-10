@@ -16,6 +16,7 @@ enum CardType {
 @export var type: CardType
 @export var name: String
 @export var description: String
+@export var value: int
 
 func _init(card: CardType) -> void:		
 	match card:
@@ -71,3 +72,6 @@ Move to an adjacent square
 			description = """
 Add 2 damage to next attack
 """
+
+func set_value(_value: int) -> void:
+	value = _value

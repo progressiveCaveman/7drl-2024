@@ -1,6 +1,7 @@
 extends PanelContainer
 
 @onready var vbox = $CardScroll/CardVBox
+@onready var hflow = $HFlowContainer
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var targets_node: Node2D
@@ -14,13 +15,17 @@ enum modes {
 	MARKET_DISPLAY
 }
 
-var current_mode = modes.CURRENT_HAND
+@export var current_mode = modes.CURRENT_HAND
 
 
 func _ready() -> void:
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
 	PlayerCards.hand_updated.connect(_on_hand_updated)
+	for i in range(20):
+		var new_card = Card.new(Card.CardType.King)
+		new_card.set_value(randi_range(10, 50))
+		PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
 
@@ -42,8 +47,12 @@ func toggle_mode() -> int:
 func update_panel() -> void:
 	for i in vbox.get_children():
 		i.queue_free()
+	for ii in hflow.get_children():
+		ii.queue_free()
 	
 	if current_mode == modes.CURRENT_HAND:
+		hflow.visible = false
+		size_flags_stretch_ratio = 1.0
 		for id in range(current_hand.size()):
 			var new_card = card.instantiate()
 			vbox.add_child(new_card)
@@ -51,13 +60,20 @@ func update_panel() -> void:
 			new_card.set_text(current_hand[id].name, current_hand[id].description)
 			new_card.id = id
 	elif current_mode == modes.MARKET_DISPLAY:
+		hflow.visible = true
 		var store_array = PlayerCards.available_to_buy
+		size_flags_stretch_ratio = 9.0
 		for id in range(store_array.size()):
 			var new_card = card.instantiate()
+			var value_label = Label.new()
+			var vbox = VBoxContainer.new()
 			vbox.add_child(new_card)
+			vbox.add_child(value_label)
+			hflow.add_child(vbox)
 			new_card.bought.connect(purchase.bind(id))
 			new_card.set_text(store_array[id].name, store_array[id].description)
-			new_card.set_value(store_array[id].value)
+			new_card.set_value(randi_range(10,100))#store_array[id].value)
+			value_label.text = str(new_card.value)
 			new_card.id = id
 		pass
 
