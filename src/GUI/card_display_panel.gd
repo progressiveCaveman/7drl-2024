@@ -38,6 +38,7 @@ func toggle_mode() -> int:
 	if current_mode == modes.CURRENT_HAND:
 		current_mode = modes.MARKET_DISPLAY
 		update_panel()
+		
 		return 1
 	else:
 		current_mode = modes.CURRENT_HAND
@@ -52,6 +53,7 @@ func update_panel() -> void:
 	
 	if current_mode == modes.CURRENT_HAND:
 		hflow.visible = false
+		vbox.visible = true
 		size_flags_stretch_ratio = 1.0
 		for id in range(current_hand.size()):
 			var new_card = card.instantiate()
@@ -61,6 +63,7 @@ func update_panel() -> void:
 			new_card.id = id
 	elif current_mode == modes.MARKET_DISPLAY:
 		hflow.visible = true
+		vbox.visible = false
 		var store_array = PlayerCards.available_to_buy
 		size_flags_stretch_ratio = 5.0
 		for id in range(store_array.size()):
@@ -84,6 +87,7 @@ func target(params: Array, id: int = 0):
 		MovementController.movement_target(game.player, params[0], params[1])
 	else:
 		MovementController.movement_target(game.player, params[0], params[1], params[2])
+	update_panel()
 
 
 func purchase(value, id) -> void:
@@ -91,6 +95,7 @@ func purchase(value, id) -> void:
 	PlayerCards.gain_card(card.type)
 	game.player.inventory_component.spend_gold(card.value)
 	PlayerCards.available_to_buy.remove_at(id)
+	update_panel()
 
 #func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
 	#var targets = []

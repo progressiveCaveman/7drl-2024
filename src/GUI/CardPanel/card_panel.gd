@@ -14,7 +14,7 @@ var value : int = 0
 var type = "debug"
 
 signal clicked(params: Array)
-signal bought()
+signal bought(value: int)
 
 var movement_params = {
 	"Pawn" : [Vector2( 1, 1), false],

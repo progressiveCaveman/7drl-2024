@@ -171,17 +171,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+mouse_filter = 0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
+mouse_filter = 0
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
@@ -243,32 +246,38 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
 script = ExtResource("16_on26a")
 
-[node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
-layout_mode = 2
-vertical_scroll_mode = 0
-
-[node name="CardVBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CardPanel" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
-visible = false
-custom_minimum_size = Vector2(250, 150)
-layout_mode = 2
-
 [node name="MarketScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
 layout_mode = 2
+mouse_filter = 2
 horizontal_scroll_mode = 0
 
 [node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 columns = 5
+
+[node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
+layout_mode = 2
+mouse_filter = 2
+vertical_scroll_mode = 0
+
+[node name="CardVBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CardPanel" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
+visible = false
+custom_minimum_size = Vector2(250, 150)
+layout_mode = 2
+mouse_filter = 2
 
 [node name="InfoBar" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 theme_override_constants/separation = 0
 alignment = 1
 
@@ -422,6 +431,7 @@ script = ExtResource("18_iryvs")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel"]
 layout_mode = 2
+mouse_filter = 0
 alignment = 1
 
 [node name="TopSpacer" type="Control" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer"]
@@ -431,6 +441,7 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 0
 
 [node name="LeftSpacer" type="Control" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(5, 0)
@@ -457,6 +468,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 
 [node name="OptionsButton" type="Button" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
