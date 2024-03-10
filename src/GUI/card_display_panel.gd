@@ -9,6 +9,12 @@ var current_hand: Array[Card]
 var current_id: int = 0
 var hand_size: int = 0
 
+enum modes {
+	CURRENT_HAND,
+	MARKET_DISPLAY
+}
+
+var current_mode = modes.CURRENT_HAND
 
 
 func _ready() -> void:
@@ -23,16 +29,37 @@ func _on_hand_updated() -> void:
 	hand_size = current_hand.size()
 	update_panel()
 
+func toggle_mode() -> int:
+	if current_mode == modes.CURRENT_HAND:
+		current_mode = modes.MARKET_DISPLAY
+		update_panel()
+		return 1
+	else:
+		current_mode = modes.CURRENT_HAND
+		update_panel()
+		return 0
+
 func update_panel() -> void:
 	for i in vbox.get_children():
 		i.queue_free()
 	
-	for id in range(current_hand.size()):
-		var new_card = card.instantiate()
-		vbox.add_child(new_card)
-		new_card.clicked.connect(target.bind(id))
-		new_card.set_text(current_hand[id].name, current_hand[id].description)
-		new_card.id = id
+	if current_mode == modes.CURRENT_HAND:
+		for id in range(current_hand.size()):
+			var new_card = card.instantiate()
+			vbox.add_child(new_card)
+			new_card.clicked.connect(target.bind(id))
+			new_card.set_text(current_hand[id].name, current_hand[id].description)
+			new_card.id = id
+	elif current_mode == modes.MARKET_DISPLAY:
+		var store_array = PlayerCards.available_to_buy
+		for id in range(store_array.size()):
+			var new_card = card.instantiate()
+			vbox.add_child(new_card)
+			new_card.bought.connect(purchase.bind(id))
+			new_card.set_text(store_array[id].name, store_array[id].description)
+			new_card.set_value(store_array[id].value)
+			new_card.id = id
+		pass
 
 func target(params: Array, id: int = 0):
 	if id != 0:
@@ -41,6 +68,13 @@ func target(params: Array, id: int = 0):
 		MovementController.movement_target(game.player, params[0], params[1])
 	else:
 		MovementController.movement_target(game.player, params[0], params[1], params[2])
+
+
+func purchase(value, id) -> void:
+	var card = PlayerCards.available_to_buy[id]
+	PlayerCards.gain_card(card.type)
+	game.player.inventory_component.spend_gold(card.value)
+	PlayerCards.available_to_buy.remove_at(id)
 
 #func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
 	#var targets = []
