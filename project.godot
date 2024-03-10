@@ -21,6 +21,7 @@ SignalBus="*res://src/Utils/signal_bus.gd"
 PlayerCards="*res://src/Game/Cards/player_cards.gd"
 MovementController="*res://src/Utils/movement_controller.gd"
 AudioManager="*res://assets/audio/audio_manager.tscn"
+DisplayManager="*res://src/Utils/display_manager.gd"
 
 [debug]
 

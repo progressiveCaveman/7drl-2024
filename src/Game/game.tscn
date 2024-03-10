@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://n87rw5cxnnn8"]
+[gd_scene load_steps=41 format=3 uid="uid://n87rw5cxnnn8"]
 
 [ext_resource type="Script" path="res://src/Game/game.gd" id="1_ne6pe"]
 [ext_resource type="Script" path="res://src/Game/EventHandlers/input_handler.gd" id="2_4winb"]
@@ -20,6 +20,8 @@
 [ext_resource type="FontFile" uid="uid://c244bgm64ellr" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf" id="18_5ujdo"]
 [ext_resource type="Script" path="res://src/Game/OptionsPanel.gd" id="18_10miv"]
 [ext_resource type="Script" path="res://src/Game/ControlPanel.gd" id="18_iryvs"]
+[ext_resource type="FontFile" uid="uid://dikrxfgf1i6e7" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini Square Mono.ttf" id="19_ogpyj"]
+[ext_resource type="FontFile" uid="uid://f6t5t7a5gm2p" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini.ttf" id="19_ucvyp"]
 [ext_resource type="Texture2D" uid="uid://lsy51jhvcxqy" path="res://assets/images/card_bg.png" id="19_uuy3l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7j4i"]
@@ -74,6 +76,14 @@ texture_margin_left = 5.0
 texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_1obni"]
+font = ExtResource("19_ogpyj")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x27t7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ue5se"]
+font = ExtResource("19_ucvyp")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h3trq"]
 content_margin_left = 8.0
@@ -154,11 +164,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+clip_contents = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 0
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
@@ -225,6 +237,7 @@ position = Vector2(904, 0)
 zoom = Vector2(2, 2)
 
 [node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
@@ -243,14 +256,21 @@ visible = false
 custom_minimum_size = Vector2(250, 150)
 layout_mode = 2
 
-[node name="HFlowContainer" type="HFlowContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
-visible = false
+[node name="MarketScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
 layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 5
 
 [node name="InfoBar" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
+alignment = 1
 
 [node name="StatsPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
 custom_minimum_size = Vector2(160, 128)
@@ -324,10 +344,12 @@ layout_mode = 2
 [node name="Label" type="Label" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Options"
+label_settings = SubResource("LabelSettings_1obni")
 horizontal_alignment = 1
 
 [node name="MusicOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption"]
 layout_mode = 2
@@ -337,7 +359,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 text = "Music"
-horizontal_alignment = 1
+label_settings = SubResource("LabelSettings_ue5se")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer"]
 layout_mode = 2
@@ -358,6 +382,7 @@ text = "x"
 
 [node name="SFXOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption"]
 layout_mode = 2
@@ -367,7 +392,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 text = "SFX"
-horizontal_alignment = 1
+label_settings = SubResource("LabelSettings_ue5se")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer"]
 layout_mode = 2

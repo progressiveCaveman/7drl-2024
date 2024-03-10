@@ -1,7 +1,7 @@
 extends PanelContainer
 
 @onready var vbox = $CardScroll/CardVBox
-@onready var hflow = $HFlowContainer
+@onready var hflow = $MarketScroll/HFlowContainer
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var targets_node: Node2D
@@ -62,7 +62,7 @@ func update_panel() -> void:
 	elif current_mode == modes.MARKET_DISPLAY:
 		hflow.visible = true
 		var store_array = PlayerCards.available_to_buy
-		size_flags_stretch_ratio = 9.0
+		size_flags_stretch_ratio = 5.0
 		for id in range(store_array.size()):
 			var new_card = card.instantiate()
 			var value_label = Label.new()
