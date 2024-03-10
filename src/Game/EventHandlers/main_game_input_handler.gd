@@ -69,6 +69,8 @@ func activate_item(player: Entity) -> Action:
 
 
 func get_item(window_title: String, inventory: InventoryComponent, evaluate_for_next_step: bool = false) -> Entity:
+	if inventory.items.size() < 1:
+		return null
 	var inventory_menu: InventoryMenu = inventory_menu_scene.instantiate()
 	add_child(inventory_menu)
 	inventory_menu.build(window_title, inventory)

@@ -24,7 +24,9 @@ func perform() -> bool:
 		attack_description += " for %d hit points." % damage
 		MessageLog.send_message(attack_description, attack_color)
 		target.fighter_component.hp -= damage
+		AudioManager.play_sound('Debug', 'player_attack', 0.2)
 	else:
 		attack_description += " but does no damage."
 		MessageLog.send_message(attack_description, attack_color)
+		AudioManager.play_sound('Debug', 'player_pickup_scroll_2', 0.2)
 	return true

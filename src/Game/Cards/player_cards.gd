@@ -8,9 +8,11 @@ const starting_deck = [
 ]
 
 signal hand_updated()
+signal store_updated()
 signal actions_changed(actions)
 signal damage_changed(damage)
 
+@export var available_to_buy: Array[Card] = []
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
@@ -64,6 +66,10 @@ func play_card(cardtype) -> bool:
 			return true
 			
 	return false
+
+func add_to_store(card: Card):
+	available_to_buy.append(card)
+	emit_signal('store_updated')
 
 func print_state():
 	print("Library:")

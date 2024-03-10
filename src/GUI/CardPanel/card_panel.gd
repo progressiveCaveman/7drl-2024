@@ -8,11 +8,13 @@ var CardType = Card.CardType
 var normal_stylebox: StyleBoxTexture = get_theme_stylebox("panel")
 var new_stylebox: StyleBoxTexture = get_theme_stylebox("panel").duplicate()
 
-var id = 0
+var id : int = 0
+var value : int = 0
 
 var type = "debug"
 
 signal clicked(params: Array)
+signal bought()
 
 var movement_params = {
 	"Pawn" : [Vector2( 1, 1), false],
@@ -36,6 +38,10 @@ func set_text(text: String, desc: String) -> void:
 		label_title.modulate = Color.INDIAN_RED
 		new_stylebox.modulate_color = Color.INDIAN_RED
 
+func set_value(_value: int) -> void:
+	value = _value
+	type = "shop"
+
 func _on_mouse_entered() -> void:
 	add_theme_stylebox_override('panel', new_stylebox)
 	print("Mouse Entered: %s" % label_title.text)
@@ -48,63 +54,56 @@ func _on_mouse_exited() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == 1:
-			# left click
-			var cardt = PlayerCards.title_to_type(label_title.text)
-			match cardt:
-				Card.CardType.Pawn:
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.Rook:
-					PlayerCards.draw_card()
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.Damage1:
-					PlayerCards.damage_mod += 1
-				Card.CardType.Knight:
-					PlayerCards.actions += 2
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.Queen:
-					PlayerCards.actions += 2
-					PlayerCards.draw_card()
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.King:
-					PlayerCards.actions += 1
-					PlayerCards.draw_card()
-					PlayerCards.draw_card()
-					PlayerCards.draw_card()
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.Damage2:
-					PlayerCards.damage_mod += 2
-				Card.CardType.Bishop:
-					PlayerCards.damage_mod += 2
-					emit_signal('clicked', movement_params[label_title.text])
-				Card.CardType.Trasher:
-					print("trash not implemented")
-				Card.CardType.Village:
-					PlayerCards.actions += 2
-					PlayerCards.draw_card()
-				Card.CardType.Laboratory:
-					PlayerCards.actions += 1
-					PlayerCards.draw_card()
-					PlayerCards.draw_card()
-				Card.CardType.MagicMissile:
-					print("MagicMissile not implemented")
-				Card.CardType.Fireball:
-					print("Fireball not implemented")
-				Card.CardType.Cleave:
-					print("Cleave not implemented")
-				_:
-					print("unhandled enum")
-					return
-			PlayerCards.play_card(cardt)
-			pass
+			if type != "shop":
+				# left click
+				var cardt = PlayerCards.title_to_type(label_title.text)
+				match cardt:
+					Card.CardType.Pawn:
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.Rook:
+						PlayerCards.draw_card()
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.Damage1:
+						PlayerCards.damage_mod += 1
+					Card.CardType.Knight:
+						PlayerCards.actions += 2
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.Queen:
+						PlayerCards.actions += 2
+						PlayerCards.draw_card()
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.King:
+						PlayerCards.actions += 1
+						PlayerCards.draw_card()
+						PlayerCards.draw_card()
+						PlayerCards.draw_card()
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.Damage2:
+						PlayerCards.damage_mod += 2
+					Card.CardType.Bishop:
+						PlayerCards.damage_mod += 2
+						emit_signal('clicked', movement_params[label_title.text])
+					Card.CardType.Trasher:
+						print("trash not implemented")
+					Card.CardType.Village:
+						PlayerCards.actions += 2
+						PlayerCards.draw_card()
+					Card.CardType.Laboratory:
+						PlayerCards.actions += 1
+						PlayerCards.draw_card()
+						PlayerCards.draw_card()
+					Card.CardType.MagicMissile:
+						print("MagicMissile not implemented")
+					Card.CardType.Fireball:
+						print("Fireball not implemented")
+					Card.CardType.Cleave:
+						print("Cleave not implemented")
+					_:
+						print("unhandled enum")
+						return
+				PlayerCards.play_card(cardt)
+			else:
+				emit_signal("bought", value)
 		elif event.button_index == 2:
 			# right click
 			pass
-
-func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
-	pass
-
-func generate_rotations(axis: Vector2, target_array: Array) -> void:
-	pass
-
-func place_targets(target_array: Array, position:) -> void:
-	pass

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c26fmwmufp1x4"]
+
+[ext_resource type="Script" path="res://assets/audio/AudioManager.gd" id="1_h2ffn"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_h2ffn")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+bus = &"Music"
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
+max_polyphony = 5
+bus = &"Sound"
