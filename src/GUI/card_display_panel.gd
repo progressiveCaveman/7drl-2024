@@ -110,13 +110,13 @@ func preview(params: Array, on: bool, id: int = 0):
 
 func purchase(value, id) -> void:
 	var card = PlayerCards.available_to_buy[id]
-	if card.value < game.player.inventory_component.gold:
+	if card.cost < game.player.inventory_component.gold:
 		PlayerCards.gain_card(card.type)
 		game.player.inventory_component.spend_gold(card.cost)
-		MessageLog.send_message("Bought %s for %s gold.", GameColors.INVALID)
+		MessageLog.send_message("Bought %s for %s gold." % [card.name, card.cost], GameColors.INVALID)
 	else:
 		MessageLog.send_message("You can't afford this card.", GameColors.INVALID)
-	PlayerCards.available_to_buy.remove_at(id)
+	#PlayerCards.available_to_buy.remove_at(id)
 	update_panel()
 
 #func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:

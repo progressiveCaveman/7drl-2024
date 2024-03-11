@@ -2,6 +2,7 @@ class_name Game
 extends Node2D
 
 signal player_created(player)
+signal map_created(map)
 
 const player_definition: EntityDefinition = preload("res://assets/definitions/entities/actors/entity_definition_player.tres")
 const tile_size = 16
@@ -22,6 +23,7 @@ func _ready() -> void:
 	
 	map.generate(player, player_depth)
 	map.update_fov(player.grid_position)
+	map_created.emit(map)
 	
 	MessageLog.send_message.bind(
 		"The ORC TAVERN has erupted into violence once again!",
@@ -40,6 +42,7 @@ func _use_stairs_down():
 		PlayerCards.add_to_store()
 		map.generate(player, player_depth)
 		map.update_fov(player.grid_position)
+		map_created.emit(map)	
 
 #func _use_stairs_up():
 	#if player_depth > 1 and map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:

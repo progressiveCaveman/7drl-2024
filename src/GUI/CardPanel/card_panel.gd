@@ -4,6 +4,11 @@ var CardType = Card.CardType
 @onready var label_title := $VBoxContainer/LabelTitle
 @onready var label_description := $VBoxContainer/LabelDescription
 
+const entity_types = {
+	"lightning_scroll": preload("res://assets/definitions/entities/items/lightning_scroll_definition.tres"),
+	"fireball_scroll": preload("res://assets/definitions/entities/items/fireball_scroll_definition.tres"),
+}
+
 
 var normal_stylebox: StyleBoxTexture = get_theme_stylebox("panel")
 var new_stylebox: StyleBoxTexture = get_theme_stylebox("panel").duplicate()
@@ -12,6 +17,8 @@ var id : int = 0
 var value : int = 0
 
 var type = "debug"
+var map: Map
+var player: Entity
 
 signal focus_change(params: Array, on: bool)
 signal clicked(params: Array)
@@ -26,6 +33,15 @@ var movement_params = {
 	"King" : [Vector2( 1, 1), false, Vector2(1, 0)],
 	"Error" : [Vector2( 0, 0), false],
 }
+
+
+
+
+func _on_game_map_created(_map):
+	map = _map
+
+func _on_game_player_created(_player):
+	player = _player
 
 func set_text(text: String, desc: String) -> void:
 	label_title.text = text
@@ -105,10 +121,13 @@ func card_match(card):
 			PlayerCards.draw_card()
 			PlayerCards.draw_card()
 		Card.CardType.MagicMissile:
-			print("MagicMissile not implemented")
+			var tmp_item = Entity.new(map.map_data, Vector2i(0,0), entity_types.fireball_scroll)
+			var item_action = ItemAction.new(player, tmp_item)
+			item_action.perform()
 		Card.CardType.Fireball:
 			print("Fireball not implemented")
 		Card.CardType.Cleave:
 			print("Cleave not implemented")
 		_:
 			print("unhandled enum")
+
