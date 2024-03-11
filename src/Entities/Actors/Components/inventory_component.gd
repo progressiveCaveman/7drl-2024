@@ -1,9 +1,14 @@
 class_name InventoryComponent
 extends Component
 
+signal gold_updated(amount)
+
 var items: Array[Entity]
 var capacity: int
-var gold: int = 0
+var gold: int = 0:
+	set(value):
+		gold = value
+		gold_updated.emit(value)
 
 func _init(capacity: int) -> void:
 	items = []

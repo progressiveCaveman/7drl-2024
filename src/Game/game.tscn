@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://n87rw5cxnnn8"]
+[gd_scene load_steps=44 format=3 uid="uid://n87rw5cxnnn8"]
 
 [ext_resource type="Script" path="res://src/Game/game.gd" id="1_ne6pe"]
 [ext_resource type="Script" path="res://src/Game/EventHandlers/input_handler.gd" id="2_4winb"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://src/Game/OptionsPanel.gd" id="18_10miv"]
 [ext_resource type="Script" path="res://src/Game/ControlPanel.gd" id="18_iryvs"]
 [ext_resource type="Script" path="res://src/GUI/damage_display.gd" id="18_nvjr5"]
+[ext_resource type="Script" path="res://src/GUI/gold_display.gd" id="19_7ofis"]
 [ext_resource type="FontFile" uid="uid://dikrxfgf1i6e7" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini Square Mono.ttf" id="19_ogpyj"]
 [ext_resource type="FontFile" uid="uid://f6t5t7a5gm2p" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini.ttf" id="19_ucvyp"]
 [ext_resource type="Texture2D" uid="uid://lsy51jhvcxqy" path="res://assets/images/card_bg.png" id="19_uuy3l"]
@@ -345,6 +346,18 @@ label_settings = SubResource("LabelSettings_c11as")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GoldDisplay" type="MarginContainer" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("19_7ofis")
+
+[node name="GoldLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/GoldDisplay"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HP:30/30"
+label_settings = SubResource("LabelSettings_c11as")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MouseoverLabel" type="Label" parent="HBoxContainer/InfoBar/StatsPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -542,6 +555,7 @@ layout_mode = 2
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay" method="initialize"]
+[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/GoldDisplay" method="initialize"]
 [connection signal="value_changed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer/HSlider" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_music_changed"]
 [connection signal="pressed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer/MuteButton" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_music_muted"]
 [connection signal="value_changed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer/HSlider" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_sfx_changed"]

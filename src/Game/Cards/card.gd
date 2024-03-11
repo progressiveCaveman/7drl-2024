@@ -38,7 +38,7 @@ func _init(card: CardType) -> void:
 			type = card
 			name = "Pawn"
 			description = """
-Move to an adjacent square
+Move to an orthogonal square
 """
 			cost = 0
 		CardType.Rook:
@@ -68,7 +68,7 @@ Move like knight
 			type = card
 			name = "Queen"
 			description = """
-Move any number of spaces in any direction
+Move like queen
 +1 card
 +1 action
 """
@@ -77,7 +77,7 @@ Move any number of spaces in any direction
 			type = card
 			name = "King"
 			description = """
-Move to an adjacent square
+Move like King
 +3 cards
 +1 action
 """
