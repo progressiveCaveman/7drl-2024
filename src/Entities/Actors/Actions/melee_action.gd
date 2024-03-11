@@ -4,6 +4,8 @@ extends ActionWithDirection
 
 func perform() -> bool:
 	var target: Entity = get_target_actor()
+	if target.entity_name != "Player" and entity.entity_name != "Player":
+		return false
 	if not target:
 		if entity == get_map_data().player:
 			MessageLog.send_message("Nothing to attack.", GameColors.IMPOSSIBLE)
