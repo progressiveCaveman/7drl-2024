@@ -4,6 +4,8 @@ extends RefCounted
 const tile_types = {
 	"wall": preload("res://assets/tile_definitions/tile_wall.tres"),
 	"floor": preload("res://assets/tile_definitions/tile_floor.tres"),
+	"stairs_down": preload("res://assets/definitions/tiles/tile_definition_stairs_down.tres"),
+	"stairs_up": preload("res://assets/definitions/tiles/tile_definition_stairs_up.tres"),
 }
 
 var _rng := RandomNumberGenerator.new()

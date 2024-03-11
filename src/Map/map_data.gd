@@ -6,6 +6,8 @@ signal entity_placed(entity)
 const tile_types = {
 	"floor": preload("res://assets/definitions/tiles/tile_definition_floor.tres"),
 	"wall": preload("res://assets/definitions/tiles/tile_definition_wall.tres"),
+	"stairs_down": preload("res://assets/definitions/tiles/tile_definition_stairs_down.tres"),
+	"stairs_up": preload("res://assets/definitions/tiles/tile_definition_stairs_up.tres"),
 }
 
 const entity_pathfinding_weight = 10.0

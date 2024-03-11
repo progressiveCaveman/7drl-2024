@@ -16,7 +16,6 @@ func _ready() -> void:
 	card_market_button.disabled = true
 
 func _on_end_turn_pressed() -> void:
-	print("end turn")
 	SignalBus.end_turn.emit()
 
 func _on_inventory_pressed() -> void:

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TileDefinition" load_steps=4 format=3 uid="uid://b2x0biuulfof4"]
+
+[ext_resource type="Script" path="res://src/Map/tile_definition.gd" id="1_ci5bi"]
+[ext_resource type="Texture2D" uid="uid://dh8txog2i0aex" path="res://assets/images/anikki_16x16.png" id="2_246rq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6287"]
+atlas = ExtResource("2_246rq")
+region = Rect2(0, 16, 16, 16)
+
+[resource]
+script = ExtResource("1_ci5bi")
+texture = SubResource("AtlasTexture_a6287")
+color_lit = Color(0.886275, 0.886275, 0.886275, 1)
+color_dark = Color(0.4, 0.4, 0.4, 1)
+is_walkable = true
+is_transparent = true

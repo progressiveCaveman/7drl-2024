@@ -61,10 +61,16 @@ func generate_dungeon(player:Entity) -> MapData:
 		if rooms.is_empty():
 			player.grid_position = new_room.get_center()
 			player.map_data = dungeon
+			
+			var tile: Tile = dungeon.get_tile(player.grid_position)
+			tile.set_tile_type(dungeon.tile_types.stairs_up)
 		else:
 			_tunnel_drunkard(dungeon, rooms.back().get_center(), new_room.get_center())
 		
 		rooms.append(new_room)
+	
+	var tile: Tile = dungeon.get_tile(rooms[rooms.size() - 1].get_center())
+	tile.set_tile_type(dungeon.tile_types.stairs_down)
 	
 	_bomb_level(dungeon)
 	
