@@ -1,6 +1,13 @@
 class_name TileDefinition
 extends Resource
 
+enum TileType {
+	Floor,
+	Wall,
+	StairsDown,
+	StairsUp,
+}
+
 @export_category("Visuals")
 @export var texture: AtlasTexture
 @export_color_no_alpha var color_lit: Color = Color.WHITE
@@ -9,4 +16,5 @@ extends Resource
 @export_category("Mechanics")
 @export var is_walkable: bool = true
 @export var is_transparent: bool = true
+@export var type: TileType = TileType.Floor
 

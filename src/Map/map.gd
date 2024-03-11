@@ -8,8 +8,8 @@ var map_data: MapData
 @onready var dungeon_generator: DungeonGenerator = $DungeonGenerator
 @onready var field_of_view: FieldOfView = $FieldOfView
 
-func generate(player: Entity) -> void:
-	map_data = dungeon_generator.generate_dungeon(player)
+func generate(player: Entity, depth: int) -> void:
+	map_data = dungeon_generator.generate_dungeon(player, depth)
 	map_data.entity_placed.connect(entities.add_child)
 	_place_tiles()
 	_place_entities()

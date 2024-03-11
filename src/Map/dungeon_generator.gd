@@ -33,7 +33,7 @@ func _ready() -> void:
 	_rng.randomize()
 
 
-func generate_dungeon(player:Entity) -> MapData:
+func generate_dungeon(player:Entity, depth: int) -> MapData:
 	var dungeon := MapData.new(map_width, map_height, player)
 	dungeon.entities.append(player)
 	
@@ -62,7 +62,7 @@ func generate_dungeon(player:Entity) -> MapData:
 			player.grid_position = new_room.get_center()
 			player.map_data = dungeon
 			
-			var tile: Tile = dungeon.get_tile(player.grid_position)
+			var tile: Tile = dungeon.get_tile(new_room.get_center())
 			tile.set_tile_type(dungeon.tile_types.stairs_up)
 		else:
 			_tunnel_drunkard(dungeon, rooms.back().get_center(), new_room.get_center())
