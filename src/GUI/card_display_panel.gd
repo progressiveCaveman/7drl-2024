@@ -84,8 +84,8 @@ func update_panel() -> void:
 			hflow.add_child(vbox)
 			new_card.bought.connect(purchase.bind(id))
 			new_card.set_text(store_array[id].name, store_array[id].description)
-			new_card.set_value(randi_range(10,100))#store_array[id].value)
-			value_label.text = str(new_card.value)
+			new_card.set_value(store_array[id].cost)#store_array[id].value)
+			value_label.text = str("Gold: %d" % new_card.value)
 			new_card.id = id
 		pass
 
