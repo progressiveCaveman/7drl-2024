@@ -35,7 +35,7 @@ func _ready() -> void:
 	#SignalBus.use_stairs_up.connect(_use_stairs_up)
 
 func _use_stairs_down():
-	#if map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
+	if map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
 		player_depth += 1
 		PlayerCards.add_to_store()
 		map.generate(player, player_depth)
