@@ -14,7 +14,7 @@ const directions = {
 const inventory_menu_scene = preload("res://src/GUI/InventorMenu/inventory_menu.tscn")
 
 @export var reticle: Reticle
-
+signal num_event(num)
 
 func get_action(player: Entity) -> Action:
 	var action: Action = null
@@ -56,6 +56,37 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("use_stairs_up"):
 		SignalBus.use_stairs_up.emit()
 	
+	if Input.is_action_just_pressed('first'):
+		SignalBus.num_event.emit(1)
+		pass
+	if Input.is_action_just_pressed('second'):
+		SignalBus.num_event.emit(2)
+		pass
+	if Input.is_action_just_pressed('third'):
+		SignalBus.num_event.emit(3)
+		pass
+	if Input.is_action_just_pressed('fourth'):
+		SignalBus.num_event.emit(4)
+		pass
+	if Input.is_action_just_pressed('fifth'):
+		SignalBus.num_event.emit(5)
+		pass
+	
+	if Input.is_action_just_pressed('sixth'):
+		SignalBus.num_event.emit(6)
+		pass
+		
+	if Input.is_action_just_pressed('seventh'):
+		SignalBus.num_event.emit(7)
+		pass
+		
+	if Input.is_action_just_pressed('eighth'):
+		SignalBus.num_event.emit(8)
+		pass
+	
+	if Input.is_action_just_pressed('ninth'):
+		SignalBus.num_event.emit(9)
+		pass
 	return action
 
 

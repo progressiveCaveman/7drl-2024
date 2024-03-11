@@ -19,6 +19,7 @@ enum modes {
 @export var current_mode = modes.CURRENT_HAND
 
 func _ready() -> void:
+	SignalBus.num_event.connect(_on_num_event)
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
 	MovementController.targets_node = targets_node
@@ -31,6 +32,14 @@ func _ready() -> void:
 		PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
+
+func _on_num_event(num):
+	if num > vbox.get_child_count():
+		return
+	var _card = vbox.get_child(num - 1)
+	var new_card = PlayerCards.title_to_type(_card.label_title.text)
+	_card.card_match(new_card)
+	PlayerCards.play_card(new_card)
 
 func _on_hand_updated() -> void:
 	current_hand = PlayerCards.hand

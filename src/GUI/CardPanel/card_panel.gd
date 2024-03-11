@@ -62,51 +62,53 @@ func _on_gui_input(event: InputEvent) -> void:
 		if type != "shop":
 			# left click
 			var card = PlayerCards.title_to_type(label_title.text)
-			match card:
-					Card.CardType.Pawn:
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.Rook:
-						PlayerCards.draw_card()
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.Damage1:
-						PlayerCards.damage_mod += 1
-					Card.CardType.Knight:
-						PlayerCards.actions += 2
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.Queen:
-						PlayerCards.actions += 2
-						PlayerCards.draw_card()
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.King:
-						PlayerCards.actions += 1
-						PlayerCards.draw_card()
-						PlayerCards.draw_card()
-						PlayerCards.draw_card()
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.Damage2:
-						PlayerCards.damage_mod += 2
-					Card.CardType.Bishop:
-						PlayerCards.damage_mod += 2
-						emit_signal('clicked', movement_params[label_title.text])
-					Card.CardType.Trasher:
-						print("trash not implemented")
-					Card.CardType.Village:
-						PlayerCards.actions += 2
-						PlayerCards.draw_card()
-					Card.CardType.Laboratory:
-						PlayerCards.actions += 1
-						PlayerCards.draw_card()
-						PlayerCards.draw_card()
-					Card.CardType.MagicMissile:
-						print("MagicMissile not implemented")
-					Card.CardType.Fireball:
-						print("Fireball not implemented")
-					Card.CardType.Cleave:
-						print("Cleave not implemented")
-					_:
-						print("unhandled enum")
-						return
+			card_match(card)
 			
 			PlayerCards.play_card(card)
 		else:
 			emit_signal("bought", value)
+
+func card_match(card):
+	match card:
+		Card.CardType.Pawn:
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.Rook:
+			PlayerCards.draw_card()
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.Damage1:
+			PlayerCards.damage_mod += 1
+		Card.CardType.Knight:
+			PlayerCards.actions += 2
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.Queen:
+			PlayerCards.actions += 2
+			PlayerCards.draw_card()
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.King:
+			PlayerCards.actions += 1
+			PlayerCards.draw_card()
+			PlayerCards.draw_card()
+			PlayerCards.draw_card()
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.Damage2:
+			PlayerCards.damage_mod += 2
+		Card.CardType.Bishop:
+			PlayerCards.damage_mod += 2
+			emit_signal('clicked', movement_params[label_title.text])
+		Card.CardType.Trasher:
+			print("trash not implemented")
+		Card.CardType.Village:
+			PlayerCards.actions += 2
+			PlayerCards.draw_card()
+		Card.CardType.Laboratory:
+			PlayerCards.actions += 1
+			PlayerCards.draw_card()
+			PlayerCards.draw_card()
+		Card.CardType.MagicMissile:
+			print("MagicMissile not implemented")
+		Card.CardType.Fireball:
+			print("Fireball not implemented")
+		Card.CardType.Cleave:
+			print("Cleave not implemented")
+		_:
+			print("unhandled enum")
