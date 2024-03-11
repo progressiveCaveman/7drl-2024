@@ -162,6 +162,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 clip_contents = true
@@ -236,6 +238,8 @@ script = ExtResource("9_eusf6")
 [node name="MovementTargets" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 position = Vector2(904, 0)
 
+[node name="TargetPreviews" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game"]
 zoom = Vector2(2, 2)
 
@@ -247,11 +251,13 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
 script = ExtResource("16_on26a")
 
 [node name="MarketScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 horizontal_scroll_mode = 0
 
 [node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -272,7 +278,6 @@ mouse_filter = 2
 visible = false
 custom_minimum_size = Vector2(250, 150)
 layout_mode = 2
-mouse_filter = 2
 
 [node name="InfoBar" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2

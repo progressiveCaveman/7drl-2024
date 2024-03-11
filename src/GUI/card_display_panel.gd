@@ -5,6 +5,7 @@ extends PanelContainer
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var targets_node: Node2D
+var previews_node: Node2D
 var game: Game
 var current_hand: Array[Card]
 var current_id: int = 0
@@ -17,10 +18,12 @@ enum modes {
 
 @export var current_mode = modes.CURRENT_HAND
 
-
 func _ready() -> void:
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
+	MovementController.targets_node = targets_node
+	previews_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/TargetPreviews")
+	MovementController.previews_node = previews_node
 	PlayerCards.hand_updated.connect(_on_hand_updated)
 	for i in range(20):
 		var new_card = Card.new(Card.CardType.King)
@@ -59,6 +62,7 @@ func update_panel() -> void:
 			var new_card = card.instantiate()
 			vbox.add_child(new_card)
 			new_card.clicked.connect(target.bind(id))
+			new_card.focus_change.connect(preview.bind(id))
 			new_card.set_text(current_hand[id].name, current_hand[id].description)
 			new_card.id = id
 	elif current_mode == modes.MARKET_DISPLAY:
@@ -81,6 +85,7 @@ func update_panel() -> void:
 		pass
 
 func target(params: Array, id: int = 0):
+	MovementController.clear_targets()
 	if id != 0:
 		MovementController.current_id = id
 	if params.size() < 3:
@@ -89,11 +94,23 @@ func target(params: Array, id: int = 0):
 		MovementController.movement_target(game.player, params[0], params[1], params[2])
 	update_panel()
 
+func preview(params: Array, on: bool, id: int = 0):
+	MovementController.clear_targets(1)
+	if on:
+		if params.size() < 3:
+			MovementController.movement_target_preview(game.player, params[0], params[1])
+		else:
+			MovementController.movement_target_preview(game.player, params[0], params[1], params[2])
+	pass
 
 func purchase(value, id) -> void:
 	var card = PlayerCards.available_to_buy[id]
-	PlayerCards.gain_card(card.type)
-	game.player.inventory_component.spend_gold(card.value)
+	if card.value < game.player.inventory_component.gold:
+		PlayerCards.gain_card(card.type)
+		game.player.inventory_component.spend_gold(card.value)
+		MessageLog.send_message("Bought %s for %s gold.", GameColors.INVALID)
+	else:
+		MessageLog.send_message("You can't afford this card.", GameColors.INVALID)
 	PlayerCards.available_to_buy.remove_at(id)
 	update_panel()
 
