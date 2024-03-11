@@ -73,14 +73,25 @@ func play_card(cardtype) -> bool:
 func add_to_store(card: Card = null):
 	if card == null:
 		#select a random unavailable card to add
-		while card == null:
-			var randcard = randi_range(Card.CardType.Trasher, Card.CardType.Cleave)
-			var reject = false
-			for c in available_to_buy:
-				if c.type == randcard:
-					reject = true
-			if not reject:
-				card = Card.new(randcard)
+		var types = Card.all_types.duplicate()
+		for c in available_to_buy:
+			for i in types.size():
+				if c.type == types[i]:
+					types.remove_at(i)
+					break
+		if types.size() < 1:
+			MessageLog.send_message("You have unlocked all cards in the game! You win, but feel free to keep playing and building your deck", GameColors.STATUS_EFFECT_APPLIED)
+			return
+		card = Card.new(types[randi_range(0, types.size() - 1)])
+		
+		#while card == null:
+			#var randcard = randi_range(Card.CardType.Trasher, Card.CardType.Cleave)
+			#var reject = false
+			#for c in available_to_buy:
+				#if c.type == randcard:
+					#reject = true
+			#if not reject:
+				#card = Card.new(randcard)
 	
 	available_to_buy.append(card)
 	emit_signal('store_updated')

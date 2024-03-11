@@ -17,7 +17,6 @@ func generate(player: Entity, depth: int) -> void:
 			first = false
 		else:
 			node.queue_free()
-		
 	
 	map_data = dungeon_generator.generate_dungeon(player, depth)
 	map_data.entity_placed.connect(entities.add_child)

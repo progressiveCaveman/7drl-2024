@@ -22,6 +22,26 @@ enum CardType {
 	Cleave, # +1 damage all adjacent # keep cleave as last card or stuff will break
 }
 
+const all_types = [
+	#starting cards
+	CardType.Pawn,
+	CardType.Rook,
+	CardType.Damage1,
+	CardType.Knight,
+	# always available
+	CardType.Queen,
+	CardType.King,
+	CardType.Damage2,
+	CardType.Bishop,
+	# limited selection cards
+	CardType.Trasher,
+	CardType.Village,
+	CardType.Laboratory,
+	CardType.MagicMissile, # +2 damage range 5
+	CardType.Fireball, # +3 damage radius 2 range 5
+	CardType.Cleave, # +1 damage all adjacent # keep cleave as last card or stuff will break
+]
+
 @export var type: CardType
 @export var name: String
 @export var description: String
