@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://n87rw5cxnnn8"]
+[gd_scene load_steps=43 format=3 uid="uid://n87rw5cxnnn8"]
 
 [ext_resource type="Script" path="res://src/Game/game.gd" id="1_ne6pe"]
 [ext_resource type="Script" path="res://src/Game/EventHandlers/input_handler.gd" id="2_4winb"]
@@ -19,8 +19,11 @@
 [ext_resource type="Script" path="res://src/GUI/action_display.gd" id="17_vg2rf"]
 [ext_resource type="PackedScene" uid="uid://dndq5iahsttml" path="res://src/GUI/CardPanel/card_panel.tscn" id="17_vnefh"]
 [ext_resource type="FontFile" uid="uid://c244bgm64ellr" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf" id="18_5ujdo"]
+[ext_resource type="Script" path="res://src/Game/OptionsPanel.gd" id="18_10miv"]
 [ext_resource type="Script" path="res://src/Game/ControlPanel.gd" id="18_iryvs"]
 [ext_resource type="Script" path="res://src/GUI/damage_display.gd" id="18_nvjr5"]
+[ext_resource type="FontFile" uid="uid://dikrxfgf1i6e7" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini Square Mono.ttf" id="19_ogpyj"]
+[ext_resource type="FontFile" uid="uid://f6t5t7a5gm2p" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini.ttf" id="19_ucvyp"]
 [ext_resource type="Texture2D" uid="uid://lsy51jhvcxqy" path="res://assets/images/card_bg.png" id="19_uuy3l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7j4i"]
@@ -64,6 +67,25 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_sr2kr"]
 font = ExtResource("9_8xlja")
 font_size = 32
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8tt58"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = SubResource("AtlasTexture_q7j4i")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_1obni"]
+font = ExtResource("19_ogpyj")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x27t7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ue5se"]
+font = ExtResource("19_ucvyp")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h3trq"]
 content_margin_left = 8.0
@@ -142,24 +164,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+clip_contents = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+mouse_filter = 0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
+mouse_filter = 0
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
@@ -211,22 +240,41 @@ script = ExtResource("9_eusf6")
 [node name="MovementTargets" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
 position = Vector2(904, 0)
 
+[node name="TargetPreviews" type="Node2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game/Map"]
+
 [node name="Camera2D" type="Camera2D" parent="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game"]
 zoom = Vector2(2, 2)
 
 [node name="CardDisplayPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_84atu")
 script = ExtResource("16_on26a")
 
+[node name="MarketScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+horizontal_scroll_mode = 0
+
+[node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+columns = 5
+
 [node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
 layout_mode = 2
+mouse_filter = 2
 vertical_scroll_mode = 0
 
 [node name="CardVBox" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="CardPanel" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox" instance=ExtResource("17_vnefh")]
 visible = false
@@ -236,7 +284,9 @@ layout_mode = 2
 [node name="InfoBar" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 theme_override_constants/separation = 0
+alignment = 1
 
 [node name="StatsPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
 custom_minimum_size = Vector2(160, 128)
@@ -320,6 +370,89 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="OptionsPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_8tt58")
+script = ExtResource("18_10miv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/OptionsPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_1obni")
+horizontal_alignment = 1
+
+[node name="MusicOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Music"
+label_settings = SubResource("LabelSettings_ue5se")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+tick_count = 10
+
+[node name="MuteButton" type="Button" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_colors/font_color = Color(0.921569, 0, 0, 1)
+text = "x"
+
+[node name="SFXOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "SFX"
+label_settings = SubResource("LabelSettings_ue5se")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+max_value = 1.0
+step = 0.05
+value = 1.0
+tick_count = 10
+
+[node name="MuteButton" type="Button" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_colors/font_color = Color(0.921569, 0, 0, 1)
+text = "x"
+
 [node name="ControlPanel" type="PanelContainer" parent="HBoxContainer/InfoBar"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -329,6 +462,7 @@ script = ExtResource("18_iryvs")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel"]
 layout_mode = 2
+mouse_filter = 0
 alignment = 1
 
 [node name="TopSpacer" type="Control" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer"]
@@ -338,6 +472,7 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 0
 
 [node name="LeftSpacer" type="Control" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(5, 0)
@@ -364,8 +499,9 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 
-[node name="InventoryButton" type="Button" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -376,7 +512,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_yvdwe")
 theme_override_styles/hover = SubResource("StyleBoxTexture_8ol0m")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_cb4xy")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_0o1nt")
-text = " INVENTORY "
+text = "OPTIONS"
 
 [node name="RightMiddleSpacer" type="Control" parent="HBoxContainer/InfoBar/ControlPanel/VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
@@ -407,3 +543,7 @@ layout_mode = 2
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay" method="initialize"]
+[connection signal="value_changed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer/HSlider" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_music_changed"]
+[connection signal="pressed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/MusicOption/HBoxContainer/MuteButton" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_music_muted"]
+[connection signal="value_changed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer/HSlider" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_sfx_changed"]
+[connection signal="pressed" from="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer/SFXOption/HBoxContainer/MuteButton" to="HBoxContainer/InfoBar/OptionsPanel" method="_on_sfx_muted"]

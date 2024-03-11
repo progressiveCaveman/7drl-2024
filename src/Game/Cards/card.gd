@@ -147,3 +147,6 @@ Attack all adjacent enemies
 			cost = 6
 		_:
 			print("uncaught match")
+
+func set_cost(_cost: int) -> void:
+	cost = _cost

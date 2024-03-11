@@ -1,11 +1,12 @@
 extends Node
 
 var game: Game = null
-var targets_node: Node2D = null
+@onready var targets_node: Node2D
+@onready var previews_node: Node2D 
 var target_node_array: Array
 var current_id: int = 0
 
-
+signal finished(current_id)
 var target = preload("res://src/GUI/MovementTarget/movement_target_instance.tscn")
 
 func movement_target(actor: Entity, axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
@@ -14,11 +15,19 @@ func movement_target(actor: Entity, axis: Vector2, infinite: bool, axis2: Vector
 	generate_rotations(axis, targets)
 	if axis2 != Vector2.ZERO:
 		generate_rotations(axis2, targets)
-	place_targets(actor, targets, pos, infinite)
+	place_targets(actor, true, targets, pos, infinite)
 	if actor.entity_name != "Player":
 		var targ = choose_target(actor, targets)
 		_on_MovementTargets_clicked(targ.vector, targ.iteration, actor)
 	pass
+
+func movement_target_preview(actor: Entity, axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
+	var targets = []
+	var pos = actor.grid_position
+	generate_rotations(axis, targets)
+	if axis2 != Vector2.ZERO:
+		generate_rotations(axis2, targets)
+	place_targets(actor, false, targets, pos, infinite)
 
 func generate_rotations(axis: Vector2, target_array: Array) -> void:
 	var _x = axis.x
@@ -37,7 +46,7 @@ func generate_rotations(axis: Vector2, target_array: Array) -> void:
 	if Vector2(-_y, -_x) not in target_array:
 		target_array.append( Vector2(-_y, -_x) )
 
-func place_targets(actor: Entity, target_array: Array, position: Vector2i, infinite: bool, iteration : int = 0) -> void:
+func place_targets(actor: Entity, active: bool, target_array: Array, position: Vector2i, infinite: bool, iteration : int = 0) -> void:
 	var map_data: MapData = actor.map_data
 	target_node_array = []
 	for t in target_array:
@@ -49,20 +58,36 @@ func place_targets(actor: Entity, target_array: Array, position: Vector2i, infin
 			var target_instance = target.instantiate()
 			target_instance.vector = t
 			target_instance.iteration = iteration + 1
-			targets_node.add_child(target_instance)
+			target_instance.active = active
+			if active:
+				targets_node.add_child(target_instance)
+			else:
+				previews_node.add_child(target_instance)
 			target_instance.position = Grid.grid_to_world(position + Vector2i(t) )
 			target_instance.clicked.connect(_on_MovementTargets_clicked.bind(actor))
+			
 			target_node_array.append(target_instance)
 			if map_data.get_actor_at_location(position + Vector2i(t)):
 				continue
 			if infinite and iteration < 10:
-				place_targets(actor, [t], position + Vector2i(t), true, iteration + 1)
+				place_targets(actor, active, [t], position + Vector2i(t), true, iteration + 1)
 			
 	pass
 	# variables to adjust offsets for overlap when hand > 5
 	#var window_size: Vector2 = DisplayServer.window_get_size()
 	#var v_margins = 30
 	#var card_gap = (window_size.y - v_margins) / hand_size
+
+func clear_targets(type = 0) -> void:
+	if type == 0:
+		for i in targets_node.get_children():
+			i.queue_free()
+	elif type == 1:
+		for i in previews_node.get_children():
+			i.queue_free()
+	elif type == 2:
+		clear_targets(0)
+		clear_targets(1)
 
 func choose_target(actor: Entity, target_array: Array):
 	var closest = Vector2i(9999, 9999)
@@ -100,3 +125,4 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int, actor: 
 	if actor.entity_name == "Player":
 		PlayerCards.actions -= 1
 		game.map.update_fov(game.player.grid_position)
+		emit_signal("finished", current_id)

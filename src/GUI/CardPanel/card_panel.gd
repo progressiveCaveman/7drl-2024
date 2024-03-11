@@ -13,8 +13,9 @@ var value : int = 0
 
 var type = "debug"
 
+signal focus_change(params: Array, on: bool)
 signal clicked(params: Array)
-signal bought()
+signal bought(value: int)
 
 var movement_params = {
 	"Pawn" : [Vector2( 1, 1), false],
@@ -44,20 +45,24 @@ func set_value(_value: int) -> void:
 
 func _on_mouse_entered() -> void:
 	add_theme_stylebox_override('panel', new_stylebox)
-	print("Mouse Entered: %s" % label_title.text)
+	if type == "move":
+		#MovementController.clear_targets()
+		emit_signal('focus_change', movement_params[label_title.text], true)
+	#else:
+		#MovementController.clear_targets()
 	
 
 func _on_mouse_exited() -> void:
+	if type == "move":
+		emit_signal('focus_change', movement_params[label_title.text], false)
 	add_theme_stylebox_override('panel', normal_stylebox)
-	print("Mouse Exited: %s" % label_title.text)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == 1:
-			if type != "shop":
-				# left click
-				var cardt = PlayerCards.title_to_type(label_title.text)
-				match cardt:
+	if event.is_action_released("left_mouse"):
+		if type != "shop":
+			# left click
+			var card = PlayerCards.title_to_type(label_title.text)
+			match card:
 					Card.CardType.Pawn:
 						emit_signal('clicked', movement_params[label_title.text])
 					Card.CardType.Rook:
@@ -101,9 +106,7 @@ func _on_gui_input(event: InputEvent) -> void:
 					_:
 						print("unhandled enum")
 						return
-				PlayerCards.play_card(cardt)
-			else:
-				emit_signal("bought", value)
-		elif event.button_index == 2:
-			# right click
-			pass
+			
+			PlayerCards.play_card(card)
+		else:
+			emit_signal("bought", value)

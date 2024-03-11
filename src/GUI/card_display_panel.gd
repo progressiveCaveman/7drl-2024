@@ -1,9 +1,11 @@
 extends PanelContainer
 
 @onready var vbox = $CardScroll/CardVBox
+@onready var hflow = $MarketScroll/HFlowContainer
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var targets_node: Node2D
+var previews_node: Node2D
 var game: Game
 var current_hand: Array[Card]
 var current_id: int = 0
@@ -14,13 +16,19 @@ enum modes {
 	MARKET_DISPLAY
 }
 
-var current_mode = modes.CURRENT_HAND
-
+@export var current_mode = modes.CURRENT_HAND
 
 func _ready() -> void:
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
+	MovementController.targets_node = targets_node
+	previews_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/TargetPreviews")
+	MovementController.previews_node = previews_node
 	PlayerCards.hand_updated.connect(_on_hand_updated)
+	for i in range(20):
+		var new_card = Card.new(Card.CardType.King)
+		new_card.set_cost(randi_range(10, 50))
+		PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
 
@@ -33,6 +41,7 @@ func toggle_mode() -> int:
 	if current_mode == modes.CURRENT_HAND:
 		current_mode = modes.MARKET_DISPLAY
 		update_panel()
+		
 		return 1
 	else:
 		current_mode = modes.CURRENT_HAND
@@ -42,39 +51,68 @@ func toggle_mode() -> int:
 func update_panel() -> void:
 	for i in vbox.get_children():
 		i.queue_free()
+	for ii in hflow.get_children():
+		ii.queue_free()
 	
 	if current_mode == modes.CURRENT_HAND:
+		hflow.visible = false
+		vbox.visible = true
+		size_flags_stretch_ratio = 1.0
 		for id in range(current_hand.size()):
 			var new_card = card.instantiate()
 			vbox.add_child(new_card)
 			new_card.clicked.connect(target.bind(id))
+			new_card.focus_change.connect(preview.bind(id))
 			new_card.set_text(current_hand[id].name, current_hand[id].description)
 			new_card.id = id
 	elif current_mode == modes.MARKET_DISPLAY:
+		hflow.visible = true
+		vbox.visible = false
 		var store_array = PlayerCards.available_to_buy
+		size_flags_stretch_ratio = 5.0
 		for id in range(store_array.size()):
 			var new_card = card.instantiate()
+			var value_label = Label.new()
+			var vbox = VBoxContainer.new()
 			vbox.add_child(new_card)
+			vbox.add_child(value_label)
+			hflow.add_child(vbox)
 			new_card.bought.connect(purchase.bind(id))
 			new_card.set_text(store_array[id].name, store_array[id].description)
-			new_card.set_value(store_array[id].value)
+			new_card.set_value(randi_range(10,100))#store_array[id].value)
+			value_label.text = str(new_card.value)
 			new_card.id = id
 		pass
 
 func target(params: Array, id: int = 0):
+	MovementController.clear_targets()
 	if id != 0:
 		MovementController.current_id = id
 	if params.size() < 3:
 		MovementController.movement_target(game.player, params[0], params[1])
 	else:
 		MovementController.movement_target(game.player, params[0], params[1], params[2])
+	update_panel()
 
+func preview(params: Array, on: bool, id: int = 0):
+	MovementController.clear_targets(1)
+	if on:
+		if params.size() < 3:
+			MovementController.movement_target_preview(game.player, params[0], params[1])
+		else:
+			MovementController.movement_target_preview(game.player, params[0], params[1], params[2])
+	pass
 
 func purchase(value, id) -> void:
 	var card = PlayerCards.available_to_buy[id]
-	PlayerCards.gain_card(card.type)
-	game.player.inventory_component.spend_gold(card.value)
+	if card.value < game.player.inventory_component.gold:
+		PlayerCards.gain_card(card.type)
+		game.player.inventory_component.spend_gold(card.cost)
+		MessageLog.send_message("Bought %s for %s gold.", GameColors.INVALID)
+	else:
+		MessageLog.send_message("You can't afford this card.", GameColors.INVALID)
 	PlayerCards.available_to_buy.remove_at(id)
+	update_panel()
 
 #func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:
 	#var targets = []
