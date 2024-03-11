@@ -18,7 +18,7 @@ signal clicked(params: Array)
 signal bought(value: int)
 
 var movement_params = {
-	"Pawn" : [Vector2( 1, 1), false],
+	"Pawn" : [Vector2( 0, 1), false],
 	"Bishop" : [Vector2( 1, 1), true],
 	"Rook" : [Vector2( 1, 0), true],
 	"Knight" : [Vector2( 2, 1), false],
