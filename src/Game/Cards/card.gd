@@ -19,7 +19,7 @@ enum CardType {
 	Laboratory,
 	MagicMissile, # +2 damage range 5
 	Fireball, # +3 damage radius 2 range 5
-	Cleave, # +1 damage all adjacent
+	Cleave, # +1 damage all adjacent # keep cleave as last card or stuff will break
 }
 
 @export var type: CardType

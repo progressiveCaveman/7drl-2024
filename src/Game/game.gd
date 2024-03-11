@@ -32,19 +32,20 @@ func _ready() -> void:
 	camera.make_current.call_deferred()
 	SignalBus.end_turn.connect(new_turn)
 	SignalBus.use_stairs_down.connect(_use_stairs_down)
-	SignalBus.use_stairs_up.connect(_use_stairs_up)
+	#SignalBus.use_stairs_up.connect(_use_stairs_up)
 
 func _use_stairs_down():
-	if map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
+	#if map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
 		player_depth += 1
+		PlayerCards.add_to_store()
 		map.generate(player, player_depth)
 		map.update_fov(player.grid_position)
 
-func _use_stairs_up():
-	if player_depth > 1 and map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
-		player_depth -= 1
-		map.generate(player, player_depth)
-		map.update_fov(player.grid_position)
+#func _use_stairs_up():
+	#if player_depth > 1 and map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
+		#player_depth -= 1
+		#map.generate(player, player_depth)
+		#map.update_fov(player.grid_position)
 
 func _physics_process(_delta: float) -> void:
 	if PlayerCards.actions <= 0:

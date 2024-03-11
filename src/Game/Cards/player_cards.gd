@@ -70,9 +70,21 @@ func play_card(cardtype) -> bool:
 			
 	return false
 
-func add_to_store(card: Card):
+func add_to_store(card: Card = null):
+	if card == null:
+		#select a random unavailable card to add
+		while card == null:
+			var randcard = randi_range(Card.CardType.Trasher, Card.CardType.Cleave)
+			var reject = false
+			for c in available_to_buy:
+				if c.type == randcard:
+					reject = true
+			if not reject:
+				card = Card.new(randcard)
+	
 	available_to_buy.append(card)
 	emit_signal('store_updated')
+	MessageLog.send_message("%s is now available to purchase" % card.name, GameColors.STATUS_EFFECT_APPLIED)
 
 func print_state():
 	print("Library:")
