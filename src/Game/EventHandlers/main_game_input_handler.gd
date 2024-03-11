@@ -19,36 +19,36 @@ signal num_event(num)
 func get_action(player: Entity) -> Action:
 	var action: Action = null
 	
-	for direction in directions:
-		if Input.is_action_just_pressed(direction):
-			var offset: Vector2i = directions[direction]
-			action = BumpAction.new(player, offset.x, offset.y)
-	
-	if Input.is_action_just_pressed("wait"):
-		action = WaitAction.new(player)
+	#for direction in directions:
+		#if Input.is_action_just_pressed(direction):
+			#var offset: Vector2i = directions[direction]
+			#action = BumpAction.new(player, offset.x, offset.y)
+	#
+	#if Input.is_action_just_pressed("wait"):
+		#action = WaitAction.new(player)
 	
 	if Input.is_action_just_pressed("view_history"):
 		get_parent().transition_to(InputHandler.InputHandlers.HISTORY_VIEWER)
 	
-	if Input.is_action_just_pressed("pickup"):
-		action = PickupAction.new(player)
-	
-	if Input.is_action_just_pressed("drop"):
-		var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)
-		action = DropItemAction.new(player, selected_item)
-	
-	if Input.is_action_just_pressed("activate"):
-		action = await activate_item(player)
-	
-	if Input.is_action_just_pressed("look"):
-		await get_grid_position(player, 0)
+	#if Input.is_action_just_pressed("pickup"):
+		#action = PickupAction.new(player)
+	#
+	#if Input.is_action_just_pressed("drop"):
+		#var selected_item: Entity = await get_item("Select an item to drop", player.inventory_component)
+		#action = DropItemAction.new(player, selected_item)
+	#
+	#if Input.is_action_just_pressed("activate"):
+		#action = await activate_item(player)
+	#
+	#if Input.is_action_just_pressed("look"):
+		#await get_grid_position(player, 0)
 	
 	
 	if Input.is_action_just_pressed("quit") or Input.is_action_just_pressed("ui_back"):
 		action = EscapeAction.new(player)
-	
-	if Input.is_action_just_pressed("reveal_map"):
-		action = RevealAction.new(player)
+	#
+	#if Input.is_action_just_pressed("reveal_map"):
+		#action = RevealAction.new(player)
 	
 	if Input.is_action_just_pressed("use_stairs_down"):
 		SignalBus.use_stairs_down.emit()

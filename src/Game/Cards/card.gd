@@ -34,12 +34,12 @@ const all_types = [
 	CardType.Damage2,
 	CardType.Bishop,
 	# limited selection cards
-	CardType.Trasher,
+	#CardType.Trasher,
 	CardType.Village,
 	CardType.Laboratory,
-	CardType.MagicMissile, # +2 damage range 5
-	CardType.Fireball, # +3 damage radius 2 range 5
-	CardType.Cleave, # +1 damage all adjacent # keep cleave as last card or stuff will break
+	#CardType.MagicMissile, # +2 damage range 5
+	#CardType.Fireball, # +3 damage radius 2 range 5
+	#CardType.Cleave, # +1 damage all adjacent # keep cleave as last card or stuff will break
 ]
 
 @export var type: CardType
