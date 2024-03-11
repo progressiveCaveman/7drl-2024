@@ -12,7 +12,10 @@ signal store_updated()
 signal actions_changed(actions)
 signal damage_changed(damage)
 
-@export var available_to_buy: Array[Card] = []
+@export var available_to_buy: Array[Card] = [
+	Card.new(Card.CardType.Damage1), Card.new(Card.CardType.Pawn), Card.new(Card.CardType.Knight), Card.new(Card.CardType.Rook), 
+	Card.new(Card.CardType.Bishop), Card.new(Card.CardType.Queen), Card.new(Card.CardType.King), Card.new(Card.CardType.Damage2), 
+]
 @export var library: Array[Card] = []
 @export var discard: Array[Card] = []
 @export var hand: Array[Card] = []
