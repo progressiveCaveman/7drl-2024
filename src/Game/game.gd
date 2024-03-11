@@ -11,6 +11,7 @@ const tile_size = 16
 @onready var map: Map = $Map
 @onready var camera: Camera2D = $Camera2D
 @onready var targets_node: Node2D = $Map/MovementTargets
+@onready var player_depth: int = 1
 
 func _ready() -> void:
 	player = Entity.new(null, Vector2i.ZERO, player_definition)
@@ -19,7 +20,7 @@ func _ready() -> void:
 	remove_child(camera)
 	player.add_child(camera)
 	
-	map.generate(player)
+	map.generate(player, player_depth)
 	map.update_fov(player.grid_position)
 	
 	MessageLog.send_message.bind(
@@ -30,7 +31,20 @@ func _ready() -> void:
 	MovementController.targets_node = targets_node
 	camera.make_current.call_deferred()
 	SignalBus.end_turn.connect(new_turn)
+	SignalBus.use_stairs_down.connect(_use_stairs_down)
+	SignalBus.use_stairs_up.connect(_use_stairs_up)
 
+func _use_stairs_down():
+	if map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
+		player_depth += 1
+		map.generate(player, player_depth)
+		map.update_fov(player.grid_position)
+
+func _use_stairs_up():
+	if player_depth > 1 and map.map_data.get_tile(player.grid_position)._definition.type == TileDefinition.TileType.StairsDown:
+		player_depth -= 1
+		map.generate(player, player_depth)
+		map.update_fov(player.grid_position)
 
 func _physics_process(_delta: float) -> void:
 	if PlayerCards.actions <= 0:

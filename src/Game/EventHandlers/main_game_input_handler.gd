@@ -50,6 +50,12 @@ func get_action(player: Entity) -> Action:
 	if Input.is_action_just_pressed("reveal_map"):
 		action = RevealAction.new(player)
 	
+	if Input.is_action_just_pressed("use_stairs_down"):
+		SignalBus.use_stairs_down.emit()
+	
+	if Input.is_action_just_pressed("use_stairs_up"):
+		SignalBus.use_stairs_up.emit()
+	
 	return action
 
 

@@ -14,3 +14,4 @@ color_lit = Color(0.823529, 0.407843, 0, 1)
 color_dark = Color(0.4, 0.4, 0.4, 1)
 is_walkable = true
 is_transparent = true
+type = 0

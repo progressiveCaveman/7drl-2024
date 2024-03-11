@@ -88,8 +88,8 @@ func print_state():
 func title_to_type(title) -> Card.CardType:
 	if title == "Pawn":
 		return Card.CardType.Pawn
-	#if title == "Bishop":
-		#return Card.CardType.Bishop
+	if title == "Bishop":
+		return Card.CardType.Bishop
 	if title == "Rook":
 		return Card.CardType.Rook
 	if title == "Knight":
