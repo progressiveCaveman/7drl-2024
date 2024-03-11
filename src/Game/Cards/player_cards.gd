@@ -23,7 +23,7 @@ signal damage_changed(damage)
 	set(value):
 		damage_mod = value
 		emit_signal('damage_changed', value)
-@export var actions = 0:  # num actions remaining until enemies act
+@export var actions = 1:  # num actions remaining until enemies act
 	set(value):
 		actions = value
 		emit_signal('actions_changed', value)
