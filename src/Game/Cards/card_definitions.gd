@@ -36,4 +36,8 @@ const card_definitions = {
 		"name": "+2 Damage",
 		"description": "Add 2 damage to next attack",
 	},
+	"Trasher": {
+		"name": "Trasher",
+		"description": "trash a card"
+	}
 }

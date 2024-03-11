@@ -387,6 +387,7 @@ label_settings = SubResource("LabelSettings_1obni")
 horizontal_alignment = 1
 
 [node name="MusicOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
 

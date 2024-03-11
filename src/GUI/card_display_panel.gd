@@ -10,6 +10,7 @@ var game: Game
 var current_hand: Array[Card]
 var current_id: int = 0
 var hand_size: int = 0
+var trasher = false
 
 enum modes {
 	CURRENT_HAND,
@@ -20,6 +21,7 @@ enum modes {
 
 func _ready() -> void:
 	SignalBus.num_event.connect(_on_num_event)
+	SignalBus.trasher_activated.connect(_on_trasher)
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
 	MovementController.targets_node = targets_node
@@ -32,6 +34,12 @@ func _ready() -> void:
 		PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
+
+func _on_trasher():
+	trasher = true
+	for i in vbox.get_children():
+		if i.label_title.text != "Trasher":
+			i.modulate = Color.RED
 
 func _on_num_event(num):
 	if num > vbox.get_child_count():
@@ -95,13 +103,20 @@ func update_panel() -> void:
 
 func target(params: Array, id: int = 0):
 	MovementController.clear_targets()
-	if id != 0:
-		MovementController.current_id = id
-	if params.size() < 3:
-		MovementController.movement_target(game.player, params[0], params[1])
+	if trasher:
+		trasher = false
+		PlayerCards.discard_card(Card.CardType.Trasher)
+		PlayerCards.hand.erase(PlayerCards.hand[id])
+		PlayerCards.hand_updated.emit()
+		update_panel()
 	else:
-		MovementController.movement_target(game.player, params[0], params[1], params[2])
-	update_panel()
+		if id != 0:
+			MovementController.current_id = id
+		if params.size() < 3:
+			MovementController.movement_target(game.player, params[0], params[1])
+		else:
+			MovementController.movement_target(game.player, params[0], params[1], params[2])
+		update_panel()
 
 func preview(params: Array, on: bool, id: int = 0):
 	MovementController.clear_targets(1)

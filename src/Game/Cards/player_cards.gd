@@ -1,6 +1,7 @@
 extends Node
 
 const starting_deck = [
+	Card.CardType.Trasher,
 	Card.CardType.Pawn, Card.CardType.Pawn, 
 	Card.CardType.Knight, Card.CardType.Knight, 
 	Card.CardType.Rook, Card.CardType.Rook, 

@@ -96,6 +96,7 @@ func card_match(card):
 			PlayerCards.damage_mod += 2
 			emit_signal('clicked', movement_params[label_title.text])
 		Card.CardType.Trasher:
+			SignalBus.trasher_activated.emit()
 			print("trash not implemented")
 		Card.CardType.Village:
 			PlayerCards.actions += 2
