@@ -26,10 +26,6 @@ func _ready() -> void:
 	previews_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/TargetPreviews")
 	MovementController.previews_node = previews_node
 	PlayerCards.hand_updated.connect(_on_hand_updated)
-	for i in range(20):
-		var new_card = Card.new(Card.CardType.King)
-		new_card.set_cost(randi_range(10, 50))
-		PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
 
