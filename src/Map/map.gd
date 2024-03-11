@@ -9,6 +9,16 @@ var map_data: MapData
 @onready var field_of_view: FieldOfView = $FieldOfView
 
 func generate(player: Entity, depth: int) -> void:
+	for node in tiles.get_children():
+		node.queue_free()
+	var first = true
+	for node in entities.get_children():
+		if first:
+			first = false
+		else:
+			node.queue_free()
+		
+	
 	map_data = dungeon_generator.generate_dungeon(player, depth)
 	map_data.entity_placed.connect(entities.add_child)
 	_place_tiles()
