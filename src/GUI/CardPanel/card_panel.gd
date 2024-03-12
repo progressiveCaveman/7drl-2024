@@ -3,6 +3,7 @@ extends Panel
 var CardType = Card.CardType
 @onready var label_title := $VBoxContainer/LabelTitle
 @onready var label_description := $VBoxContainer/LabelDescription
+var trash = false
 
 
 var normal_stylebox: StyleBoxTexture = get_theme_stylebox("panel")
@@ -34,6 +35,8 @@ func set_text(text: String, desc: String) -> void:
 		type = "move"
 		label_title.modulate = Color.AQUAMARINE
 		new_stylebox.modulate_color = Color.AQUAMARINE
+	elif label_title.text == "Trasher":
+		type = "trasher"
 	else:
 		type = "mod"
 		label_title.modulate = Color.INDIAN_RED
@@ -61,10 +64,15 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_mouse"):
 		if type != "shop":
 			# left click
-			var card = PlayerCards.title_to_type(label_title.text)
-			card_match(card)
-			
-			PlayerCards.play_card(card)
+			if type == "trasher":
+				SignalBus.trasher_activated.emit(id)
+			elif trash == true:
+				SignalBus.trashed.emit(id)
+			else:
+				var card = PlayerCards.title_to_type(label_title.text)
+				card_match(card)
+				
+				PlayerCards.play_card(card)
 		else:
 			emit_signal("bought", value)
 

@@ -59,7 +59,7 @@ func shuffle_discard() -> void:
 func gain_card(cardtype: Card.CardType) -> void:
 	discard.append(Card.new(cardtype))
 
-func play_card(cardtype) -> bool:
+func play_card(cardtype: Card.CardType) -> bool:
 	for i in range(0, hand.size()):
 		if hand[i].type == cardtype:
 			var card = hand[i]

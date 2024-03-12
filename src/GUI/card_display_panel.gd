@@ -11,6 +11,7 @@ var current_hand: Array[Card]
 var current_id: int = 0
 var hand_size: int = 0
 var trasher = false
+var trasher_id = null
 
 enum modes {
 	CURRENT_HAND,
@@ -22,6 +23,7 @@ enum modes {
 func _ready() -> void:
 	SignalBus.num_event.connect(_on_num_event)
 	SignalBus.trasher_activated.connect(_on_trasher)
+	SignalBus.trashed.connect(_on_trashed)
 	game = get_parent().get_node("SubViewportContainer/SubViewport/Game")
 	targets_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/MovementTargets")
 	MovementController.targets_node = targets_node
@@ -35,11 +37,21 @@ func _ready() -> void:
 	_on_hand_updated()
 	pass
 
-func _on_trasher():
-	trasher = true
-	for i in vbox.get_children():
-		if i.label_title.text != "Trasher":
-			i.modulate = Color.RED
+func _on_trasher(id):
+	var children =  vbox.get_children()
+	for i in children.size():
+		if i != id:
+			children[i].modulate = Color.RED
+			children[i].trash = true
+	trasher_id = id
+
+func _on_trashed(id):
+	MessageLog.send_message("%s has been removed from play." % PlayerCards.hand[id].name, GameColors.ENEMY_DIE)
+	PlayerCards.hand.remove_at(id)
+	PlayerCards.play_card(
+		PlayerCards.hand[trasher_id].type
+	)
+	pass
 
 func _on_num_event(num):
 	if num > vbox.get_child_count():
