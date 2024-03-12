@@ -1,7 +1,8 @@
 extends PanelContainer
 
 @onready var vbox = $CardScroll/CardVBox
-@onready var hflow = $MarketScroll/HFlowContainer
+@onready var market_vbox = $MarketScroll/VBoxContainer
+@onready var hflow = $MarketScroll/VBoxContainer/HFlowContainer
 
 var card := preload("res://src/GUI/CardPanel/card_panel.tscn")
 var targets_node: Node2D
@@ -30,10 +31,10 @@ func _ready() -> void:
 	previews_node = get_parent().get_node("SubViewportContainer/SubViewport/Game/Map/TargetPreviews")
 	MovementController.previews_node = previews_node
 	PlayerCards.hand_updated.connect(_on_hand_updated)
-	for i in range(20):
-		var new_card = Card.new(Card.CardType.King)
-		new_card.set_cost(randi_range(10, 50))
-		PlayerCards.add_to_store(new_card)
+	#for i in range(20):
+		#var new_card = Card.new(Card.CardType.King)
+		#new_card.set_cost(randi_range(10, 50))
+		#PlayerCards.add_to_store(new_card)
 	_on_hand_updated()
 	pass
 
@@ -84,7 +85,7 @@ func update_panel() -> void:
 		ii.queue_free()
 	
 	if current_mode == modes.CURRENT_HAND:
-		hflow.visible = false
+		market_vbox.visible = false
 		vbox.visible = true
 		size_flags_stretch_ratio = 1.0
 		for id in range(current_hand.size()):
@@ -95,7 +96,7 @@ func update_panel() -> void:
 			new_card.set_text(current_hand[id].name, current_hand[id].description)
 			new_card.id = id
 	elif current_mode == modes.MARKET_DISPLAY:
-		hflow.visible = true
+		market_vbox.visible = true
 		vbox.visible = false
 		var store_array = PlayerCards.available_to_buy
 		size_flags_stretch_ratio = 5.0
@@ -105,11 +106,19 @@ func update_panel() -> void:
 			var vbox = VBoxContainer.new()
 			vbox.add_child(new_card)
 			vbox.add_child(value_label)
+			vbox.custom_minimum_size = Vector2(0, 240)
+			vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 			hflow.add_child(vbox)
 			new_card.bought.connect(purchase.bind(id))
 			new_card.set_text(store_array[id].name, store_array[id].description)
-			new_card.set_value(randi_range(10,100))#store_array[id].value)
-			value_label.text = str(new_card.value)
+			new_card.set_value(store_array[id].cost)#store_array[id].value)
+			value_label.text = str(store_array[id].cost)
+			value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			var new_settings = LabelSettings.new()
+			new_settings.font_color = GameColors.INVALID
+			new_settings.font = preload("res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf")
+			new_settings.font_size = 16
+			value_label.label_settings = new_settings
 			new_card.id = id
 		pass
 
@@ -141,13 +150,13 @@ func preview(params: Array, on: bool, id: int = 0):
 
 func purchase(value, id) -> void:
 	var card = PlayerCards.available_to_buy[id]
-	if card.value < game.player.inventory_component.gold:
+	if card.cost <= game.player.inventory_component.gold:
 		PlayerCards.gain_card(card.type)
 		game.player.inventory_component.spend_gold(card.cost)
-		MessageLog.send_message("Bought %s for %s gold.", GameColors.INVALID)
+		MessageLog.send_message("Bought %s for %s gold." % [card.name, card.cost], GameColors.INVALID)
+		#PlayerCards.available_to_buy.remove_at(id)
 	else:
 		MessageLog.send_message("You can't afford this card.", GameColors.INVALID)
-	PlayerCards.available_to_buy.remove_at(id)
 	update_panel()
 
 #func movement_target(axis: Vector2, infinite: bool, axis2: Vector2 = Vector2.ZERO) -> void:

@@ -41,6 +41,12 @@ func set_text(text: String, desc: String) -> void:
 		type = "mod"
 		label_title.modulate = Color.INDIAN_RED
 		new_stylebox.modulate_color = Color.INDIAN_RED
+	
+	if label_description.text.length() > 50:
+		var _new_settings = label_description.label_settings.duplicate()
+		_new_settings.font_size -= 4
+		label_description.label_settings = _new_settings
+
 
 func set_value(_value: int) -> void:
 	value = _value

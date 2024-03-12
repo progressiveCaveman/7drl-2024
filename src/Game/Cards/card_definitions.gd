@@ -14,7 +14,7 @@ const card_definitions = {
 	},
 	"Rook": {
 		"name": "Rook",
-		"description": "Move any number of spaces in cardinal directions \n+1 action",
+		"description": "Move any number of spaces in cardinal directions\n+1 action"
 	},
 	"Damage1": {
 		"name": "+1 Damage",
@@ -26,11 +26,11 @@ const card_definitions = {
 	},
 	"Queen": {
 		"name": "Queen",
-		"description": "Move any number of spaces in any direction \n+1 card \n+1 action",
+		"description": "Move any number of spaces in any direction\n+1 card \n+1 action"
 	},
 	"King": {
 		"name": "King",
-		"description": "Move to an adjacent square \n+3 cards \n+1 action",
+		"description": "Move to an adjacent square\n+3 cards \n+1 action"
 	},
 	"Damage2": {
 		"name": "+2 Damage",
@@ -38,6 +38,6 @@ const card_definitions = {
 	},
 	"Trasher": {
 		"name": "Trasher",
-		"description": "trash a card"
+		"description": "Permanently remove a card from play"
 	}
 }
