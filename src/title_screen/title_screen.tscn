@@ -49,9 +49,12 @@ layout_mode = 2
 texture = ExtResource("2_egf8i")
 stretch_mode = 5
 
+[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "by  geoprism  and  comfysoft"
+text = "by  geomancer  and  comfysoft"
 label_settings = SubResource("LabelSettings_ngsab")
 horizontal_alignment = 1
 
