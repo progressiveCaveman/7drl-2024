@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dveyo31hmtx0x"]
+
+[ext_resource type="Script" path="res://src/Utils/SceneManager/SceneManager.gd" id="1_8qrqb"]
+[ext_resource type="Texture2D" uid="uid://cihb3vii101yg" path="res://assets/images/anikki_16x16_black.png" id="2_6kf56"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqd8x"]
+atlas = ExtResource("2_6kf56")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_8i0hh"]
+resource_name = "Fade"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_omob7"]
+_data = {
+"Fade": SubResource("Animation_8i0hh")
+}
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_8qrqb")
+
+[node name="SceneDisplay" type="Node" parent="."]
+
+[node name="FadeRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 100
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_sqd8x")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SceneCache" type="Node2D" parent="."]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_omob7")
+}

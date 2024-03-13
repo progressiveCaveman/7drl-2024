@@ -1,0 +1,110 @@
+[gd_scene load_steps=10 format=3 uid="uid://dl2tulkrya2s1"]
+
+[ext_resource type="Script" path="res://src/title_screen/title_screen.gd" id="1_0l5l8"]
+[ext_resource type="Texture2D" uid="uid://bxdxr8nj4rmff" path="res://assets/images/logoOutline.png" id="2_egf8i"]
+[ext_resource type="FontFile" uid="uid://c244bgm64ellr" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf" id="2_pqtbu"]
+[ext_resource type="FontFile" uid="uid://2w1dgg4hs4ys" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Future Narrow.ttf" id="3_bmdui"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yll5n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ngsab"]
+font = ExtResource("2_pqtbu")
+font_color = Color(0.580392, 0.878431, 0.537255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_la4qg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6urq"]
+bg_color = Color(0.580392, 0.878431, 0.537255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uaqlq"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0l5l8")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yll5n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_egf8i")
+stretch_mode = 5
+
+[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "by  geomancer  and  comfysoft"
+label_settings = SubResource("LabelSettings_ngsab")
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Buttons" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_la4qg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+alignment = 1
+
+[node name="StartButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.580392, 0.878431, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_bmdui")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_i6urq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uaqlq")
+text = "Start Game"
+
+[node name="OptionsButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.580392, 0.878431, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_bmdui")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_i6urq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uaqlq")
+disabled = true
+text = "Options"
+
+[node name="CreditsButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.580392, 0.878431, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_bmdui")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_i6urq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uaqlq")
+disabled = true
+text = "Credits"

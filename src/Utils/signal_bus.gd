@@ -6,3 +6,5 @@ signal end_turn
 signal use_stairs_down
 signal use_stairs_up
 signal num_event(num)
+signal trasher_activated(id)
+signal trashed(id)

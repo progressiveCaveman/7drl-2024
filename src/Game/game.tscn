@@ -42,6 +42,11 @@ texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_pxikt"]
+font = ExtResource("18_5ujdo")
+font_size = 24
+font_color = Color(1, 1, 0.054902, 1)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ey3id"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -258,13 +263,26 @@ layout_mode = 2
 mouse_filter = 2
 horizontal_scroll_mode = 0
 
-[node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll"]
 visible = false
+layout_mode = 2
+
+[node name="MarketTitleLabel" type="Label" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.38
+text = "Card Market"
+label_settings = SubResource("LabelSettings_pxikt")
+horizontal_alignment = 1
+
+[node name="HFlowContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel/MarketScroll/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
 mouse_filter = 2
-columns = 5
+columns = 7
 
 [node name="CardScroll" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/CardDisplayPanel"]
 layout_mode = 2
@@ -400,6 +418,7 @@ label_settings = SubResource("LabelSettings_1obni")
 horizontal_alignment = 1
 
 [node name="MusicOption" type="PanelContainer" parent="HBoxContainer/InfoBar/OptionsPanel/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_x27t7")
 

@@ -3,6 +3,7 @@ extends Panel
 var CardType = Card.CardType
 @onready var label_title := $VBoxContainer/LabelTitle
 @onready var label_description := $VBoxContainer/LabelDescription
+var trash = false
 
 const entity_types = {
 	"lightning_scroll": preload("res://assets/definitions/entities/items/lightning_scroll_definition.tres"),
@@ -41,10 +42,18 @@ func set_text(text: String, desc: String) -> void:
 		type = "move"
 		label_title.modulate = Color.AQUAMARINE
 		new_stylebox.modulate_color = Color.AQUAMARINE
+	elif label_title.text == "Trasher":
+		type = "trasher"
 	else:
 		type = "mod"
 		label_title.modulate = Color.INDIAN_RED
 		new_stylebox.modulate_color = Color.INDIAN_RED
+	
+	if label_description.text.length() > 50:
+		var _new_settings = label_description.label_settings.duplicate()
+		_new_settings.font_size -= 4
+		label_description.label_settings = _new_settings
+
 
 func set_value(_value: int) -> void:
 	value = _value
@@ -68,10 +77,15 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_mouse"):
 		if type != "shop":
 			# left click
-			var card = PlayerCards.title_to_type(label_title.text)
-			card_match(card)
-			
-			PlayerCards.play_card(card)
+			if type == "trasher":
+				SignalBus.trasher_activated.emit(id)
+			elif trash == true:
+				SignalBus.trashed.emit(id)
+			else:
+				var card = PlayerCards.title_to_type(label_title.text)
+				card_match(card)
+				
+				PlayerCards.play_card(card)
 		else:
 			emit_signal("bought", value)
 
@@ -103,6 +117,7 @@ func card_match(card):
 			PlayerCards.damage_mod += 2
 			emit_signal('clicked', movement_params[label_title.text])
 		Card.CardType.Trasher:
+			SignalBus.trasher_activated.emit()
 			print("trash not implemented")
 		Card.CardType.Village:
 			PlayerCards.actions += 2
