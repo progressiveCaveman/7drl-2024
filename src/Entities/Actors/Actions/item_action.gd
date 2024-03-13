@@ -8,7 +8,7 @@ var target_position: Vector2i
 func _init(entity: Entity, item: Entity, target_position = null) -> void:
 	super._init(entity)
 	self.item = item
-	if not target_position is Vector2i:
+	if target_position == null:
 		target_position = entity.grid_position
 	self.target_position = target_position
 

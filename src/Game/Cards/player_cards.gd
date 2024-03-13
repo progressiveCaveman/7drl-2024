@@ -125,6 +125,18 @@ func title_to_type(title) -> Card.CardType:
 		return Card.CardType.Damage1
 	if title == "+2 Damage":
 		return Card.CardType.Damage2
+	if title == "Trasher":
+		return Card.CardType.Trasher
+	if title == "Village":
+		return Card.CardType.Village
+	if title == "Laboratory":
+		return Card.CardType.Laboratory
+	if title == "Magic Missile":
+		return Card.CardType.MagicMissile
+	if title == "Fireball":
+		return Card.CardType.Fireball
+	if title == "Cleave":
+		return Card.CardType.Cleave
 		
 	print("failed to find card")
 	return Card.CardType.Error

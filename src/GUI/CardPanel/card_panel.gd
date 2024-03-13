@@ -17,7 +17,7 @@ var id : int = 0
 var value : int = 0
 
 var type = "debug"
-var map: Map
+var map_data: MapData
 var player: Entity
 
 signal focus_change(params: Array, on: bool)
@@ -33,15 +33,6 @@ var movement_params = {
 	"King" : [Vector2( 1, 1), false, Vector2(1, 0)],
 	"Error" : [Vector2( 0, 0), false],
 }
-
-
-
-
-func _on_game_map_created(_map):
-	map = _map
-
-func _on_game_player_created(_player):
-	player = _player
 
 func set_text(text: String, desc: String) -> void:
 	label_title.text = text
@@ -121,7 +112,7 @@ func card_match(card):
 			PlayerCards.draw_card()
 			PlayerCards.draw_card()
 		Card.CardType.MagicMissile:
-			var tmp_item = Entity.new(map.map_data, Vector2i(0,0), entity_types.fireball_scroll)
+			var tmp_item = Entity.new(map_data, Vector2i(0,0), entity_types.lightning_scroll)
 			var item_action = ItemAction.new(player, tmp_item)
 			item_action.perform()
 		Card.CardType.Fireball:

@@ -65,6 +65,8 @@ func update_panel() -> void:
 		size_flags_stretch_ratio = 1.0
 		for id in range(current_hand.size()):
 			var new_card = card.instantiate()
+			new_card.map_data = game.get_map_data()
+			new_card.player = game.player
 			vbox.add_child(new_card)
 			new_card.clicked.connect(target.bind(id))
 			new_card.focus_change.connect(preview.bind(id))

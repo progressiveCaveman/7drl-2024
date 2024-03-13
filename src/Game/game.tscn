@@ -552,8 +552,6 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
-[connection signal="map_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox/CardPanel" method="_on_game_map_created"]
-[connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/VBoxContainer/CardDisplayPanel/CardScroll/CardVBox/CardPanel" method="_on_game_player_created"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/HpDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/ActionDisplay" method="initialize"]
 [connection signal="player_created" from="HBoxContainer/VBoxContainer/SubViewportContainer/SubViewport/Game" to="HBoxContainer/InfoBar/StatsPanel/VBoxContainer/DamageDisplay" method="initialize"]
