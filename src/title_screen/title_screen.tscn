@@ -1,11 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl2tulkrya2s1"]
+[gd_scene load_steps=12 format=3 uid="uid://dl2tulkrya2s1"]
 
 [ext_resource type="Script" path="res://src/title_screen/title_screen.gd" id="1_0l5l8"]
 [ext_resource type="Texture2D" uid="uid://bxdxr8nj4rmff" path="res://assets/images/logoOutline.png" id="2_egf8i"]
+[ext_resource type="FontFile" uid="uid://dikrxfgf1i6e7" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Mini Square Mono.ttf" id="2_oilos"]
 [ext_resource type="FontFile" uid="uid://c244bgm64ellr" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Pixel Square.ttf" id="2_pqtbu"]
 [ext_resource type="FontFile" uid="uid://2w1dgg4hs4ys" path="res://assets/fonts/kenney_kenney-fonts/Fonts/Kenney Future Narrow.ttf" id="3_bmdui"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yll5n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_irdd4"]
+line_spacing = 0.0
+font = ExtResource("2_oilos")
+font_size = 11
+font_color = Color(0.580392, 0.878431, 0.537255, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ngsab"]
 font = ExtResource("2_pqtbu")
@@ -44,7 +51,44 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "****************************************************************************************************
+********************************&&&**********&BJ7?!~^:...~5*****************************************
+****************************#J^     .:J&*G!.               .G*&5~^.  .7#****************************
+**************************G:   .....    .    ..::::::^^::.   ^     ..   :&**************************
+*************************~   ^~~:.:::.     .:^^^:.    :^^^^    .::^^~^:  :**************************
+************************~  :7!!.   .:::.    ^~~~   .  .~~~^   .:^.   :~.  J*************************
+***********************?  :?77.  .  .^::   .!!!~      ~77~   .:^:         ?*************************
+**********************G  .JJJ^  ~&   ^^:.  :777~..:^^7?!.    :^^   B&7::!G**************************
+**********************^  75YY.  #*.  ^^:.  !????JJJYJ:      .^^^   *********************************
+**********&**********&  .555Y   *P  .~^^. .?JJJYY?~:   ~&B   ^~~  .*********************************
+********5.  .J&******#  .GPPY  .*.  ~~~^  .JYYJ:?P5Y^  ^**.  ^!!   #**&&****************************
+*******G   .    :J#***   GGG5  .~  :7~~:  :YY5J  ^5BG?   Y~  :!7^  :!    ~***********&**************
+*******!  :~^:..    :7   ?#BG.    .7!!^   .Y55Y    7G#G!      ^7J~   :?^  ?*******&^   :5***********
+*******   ^~~~~^^:.       7GB5^.^7J?!:    .55PJ     .5#B5.     .?55YP#B   &***&#&*:      .#*********
+*******^     .:^^^^::.     .!Y55Y?!^.     ~Y5P!  ^B   ?GBP~      .^Y57.  J**G:   .   .:.   *********
+********#PJ~.   :^^^::...      ..     7.  ~Y?7:  ?*&~  .JPP7   ~:         .^          :^.  P********
+************~  .~~~:.....   .....         .^     .::     :!            ...     ..     :~^  .********
+***********7  .!!~:        .^^:::.   ...               ..  ...    ......:~~^   ..:.    ~!.  Y*******
+**********7  .777:  :B&7   ~~..^:.   ^^:  :?   :...   .:::::::.  ..:     :!!~  .::^:   .!!   &******
+*********P  .???^  .**J  .!!. .~^:   ^~:  .   ^^::    :.         .::     ^7!.  .::^~~.  ~?~  ^******
+********G   ?JJ!   #*P  .?J^  .~^:   ^!~     .~^^    .^.     ^   .:^::^~!!:     .^~.^7~ .JJ.  &*****
+*******P  .J5Y7         ?Y!   :!~:   .77.   .~!!:    :~^:^:.     .^^~::7??.     .~~: :??.!5~  ?*****
+******5  .5P5?     .7?7J557^^:~!!:    7J^   7?7~     :!7~~!~^    .~~^  .?YJ.     ^~!   ~Y?55:  P****
+*****Y  .PGP5   G^  :~PG5????J77!:    ~YJ  ^J??:     ^7:          ^~!.  .?55:    :!7~   :5PP5   ****
+****P  .GBGP^  ?**.  ~GG:     ^7!.    .5P~ JYY~  :.  ~?.          .!7~    JGG~   .!7?.   .YGB7  J***
+***P  .G#BG~  ~***  .GG7  :!  ^7!:     !GY:P5Y.  G.  !?77JYPGGPJ  .!77     YBB^   .~77     ?B5  :***
+***.  J5YG!  :****5      ~&B  .7!.  !  .BBPPP!  ^*~  ^?JYYJ?7~:    ^^.  ..  7!   .   :   ^     .#***
+***7     .  ^******&B5YG&***:  ^!   *~  !GBG~  :**&.  ..     .:~?:    ~P**?.   ~&*&P:..^G*&PYYG*****
+****&BBG!^!G****************G      Y**?   ~.  7*****J:.:!P&&******B5P&******&#&*********************
+******************************G?7Y&****&J. .~B******************************************************
+****************************************************************************************************"
+label_settings = SubResource("LabelSettings_irdd4")
+justification_flags = 0
+
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("2_egf8i")
 stretch_mode = 5
@@ -98,6 +142,7 @@ disabled = true
 text = "Options"
 
 [node name="CreditsButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons/VBoxContainer"]
+visible = false
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)

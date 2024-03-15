@@ -112,18 +112,34 @@ func _on_MovementTargets_clicked(chosen_vector: Vector2, iteration: int, actor: 
 	for child in targets_node.get_children():
 		child.queue_free()
 	var action: Action
-	action = BumpAction.new(actor, chosen_vector.x * (iteration - 1), chosen_vector.y * (iteration - 1))
-	action.perform()
-	action = ActionWithDirection.new(actor, chosen_vector.x * iteration, chosen_vector.y * iteration)
-	if action.get_target_actor():
-		if action.get_target_actor().entity_name != actor.entity_name:
-			action = BumpAction.new(actor, chosen_vector.x * iteration, chosen_vector.y * iteration)
+	if iteration > 1:
+		for i in range(iteration):
+			action = BumpAction.new(actor, chosen_vector.x, chosen_vector.y)
 			action.perform()
-	for item in action.get_map_data().get_items():
-		if game.player.grid_position == item.grid_position and actor.type != actor.AIType.HOSTILE:
-			action = PickupAction.new(game.player)
+	else:
+		action = BumpAction.new(actor, chosen_vector.x , chosen_vector.y)
+		if action.get_target_actor():
+			# extract vector data before performing action
+			var landing_vector = choose_landing_area(actor,  chosen_vector.x , chosen_vector.y)
 			action.perform()
+			# Backtracing Action
+			#var action2 = MovementAction.new(actor, landing_vector.x, landing_vector.y)
+			#action2.perform()
+			
+		#action.perform()
+	#action = ActionWithDirection.new(actor, chosen_vector.x * iteration, chosen_vector.y * iteration)
+	#if action.get_target_actor():
+		#if action.get_target_actor().entity_name != actor.entity_name:
+			#action = BumpAction.new(actor, chosen_vector.x * iteration, chosen_vector.y * iteration)
+			#action.perform()
+	#for item in action.get_map_data().get_items():
+		#if game.player.grid_position == item.grid_position and actor.type != actor.AIType.HOSTILE:
+			#action = PickupAction.new(game.player)
+			#action.perform()
 	if actor.entity_name == "Player":
 		PlayerCards.actions -= 1
 		game.map.update_fov(game.player.grid_position)
 		emit_signal("finished", current_id)
+
+func choose_landing_area(actor: Entity, offset_x, offset_y) -> Vector2i:
+		return Vector2i(0,0)
